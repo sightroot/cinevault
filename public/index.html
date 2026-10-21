@@ -420,45 +420,49 @@ updateStats();
 
 const TV_CHANNELS=[
   // TV Aberta
-  {name:"Globo",cat:"TV Aberta",slug:"globo",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/1/1f/Rede_Globo_logo_%282024%29.svg/200px-Rede_Globo_logo_%282024%29.svg.png"},
-  {name:"SBT",cat:"TV Aberta",slug:"sbt",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/f/f4/SBT_logo_%282024%29.svg/200px-SBT_logo_%282024%29.svg.png"},
-  {name:"Record TV",cat:"TV Aberta",slug:"record-tv",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/RecordTV_logo_%282016%29.svg/200px-RecordTV_logo_%282016%29.svg.png"},
-  {name:"Band",cat:"TV Aberta",slug:"band",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Band_logo_%282023%29.svg/200px-Band_logo_%282023%29.svg.png"},
-  {name:"RedeTV!",cat:"TV Aberta",slug:"redetv",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/RedeTV%21_logo_%282019%29.svg/200px-RedeTV%21_logo_%282019%29.svg.png"},
-  {name:"TV Cultura",cat:"TV Aberta",slug:"tv-cultura",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/c/c6/Logotipo_da_TV_Cultura.svg/200px-Logotipo_da_TV_Cultura.svg.png"},
+  {name:"Globo",cat:"TV Aberta",slug:"pt-globo",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/1/1f/Rede_Globo_logo_%282024%29.svg/200px-Rede_Globo_logo_%282024%29.svg.png"},
+  {name:"SBT",cat:"TV Aberta",slug:"pt-sbt",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/f/f4/SBT_logo_%282024%29.svg/200px-SBT_logo_%282024%29.svg.png"},
+  {name:"Record TV",cat:"TV Aberta",slug:"pt-recordtv",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/RecordTV_logo_%282016%29.svg/200px-RecordTV_logo_%282016%29.svg.png"},
+  {name:"Band",cat:"TV Aberta",slug:"pt-band",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Band_logo_%282023%29.svg/200px-Band_logo_%282023%29.svg.png"},
+  {name:"RedeTV!",cat:"TV Aberta",slug:"pt-redetv",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/RedeTV%21_logo_%282019%29.svg/200px-RedeTV%21_logo_%282019%29.svg.png"},
+  {name:"TV Cultura",cat:"TV Aberta",slug:"pt-tvcultura",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/c/c6/Logotipo_da_TV_Cultura.svg/200px-Logotipo_da_TV_Cultura.svg.png"},
   // Esportes
-  {name:"SporTV",cat:"Esportes",slug:"sportv",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/SporTV_2017.svg/200px-SporTV_2017.svg.png"},
-  {name:"SporTV 2",cat:"Esportes",slug:"sportv-2",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/SporTV_2017.svg/200px-SporTV_2017.svg.png"},
-  {name:"SporTV 3",cat:"Esportes",slug:"sportv-3",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/SporTV_2017.svg/200px-SporTV_2017.svg.png"},
+  {name:"SporTV",cat:"Esportes",slug:"pt-sportv1",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/SporTV_2017.svg/200px-SporTV_2017.svg.png"},
+  {name:"SporTV 2",cat:"Esportes",slug:"pt-sportv2",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/SporTV_2017.svg/200px-SporTV_2017.svg.png"},
+  {name:"SporTV 3",cat:"Esportes",slug:"pt-sportv3",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/SporTV_2017.svg/200px-SporTV_2017.svg.png"},
   {name:"ESPN",cat:"Esportes",slug:"espn",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/ESPN_wordmark.svg/200px-ESPN_wordmark.svg.png"},
-  {name:"ESPN 2",cat:"Esportes",slug:"espn-2",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/ESPN_wordmark.svg/200px-ESPN_wordmark.svg.png"},
-  {name:"ESPN 4",cat:"Esportes",slug:"espn-4",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/ESPN_wordmark.svg/200px-ESPN_wordmark.svg.png"},
+  {name:"ESPN 2",cat:"Esportes",slug:"espn2",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/ESPN_wordmark.svg/200px-ESPN_wordmark.svg.png"},
+  {name:"ESPN 4",cat:"Esportes",slug:"espn4",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/ESPN_wordmark.svg/200px-ESPN_wordmark.svg.png"},
   {name:"Premiere",cat:"Esportes",slug:"premiere",img:"https://upload.wikimedia.org/wikipedia/pt/thumb/e/e1/Premiere_FC_logo.svg/200px-Premiere_FC_logo.svg.png"},
+  {name:"Premiere 2",cat:"Esportes",slug:"premiere2",img:"https://upload.wikimedia.org/wikipedia/pt/thumb/e/e1/Premiere_FC_logo.svg/200px-Premiere_FC_logo.svg.png"},
+  {name:"Premiere 3",cat:"Esportes",slug:"premiere3",img:"https://upload.wikimedia.org/wikipedia/pt/thumb/e/e1/Premiere_FC_logo.svg/200px-Premiere_FC_logo.svg.png"},
   {name:"TNT Sports",cat:"Esportes",slug:"tnt-sports",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/5/54/TNT_Sports_2024.svg/200px-TNT_Sports_2024.svg.png"},
-  {name:"CazéTV",cat:"Esportes",slug:"cazé-tv",img:"https://yt3.googleusercontent.com/cGEmBaCqCaCIKUYaJSO2h3USv7iVpVKKL5GWQO5MaZL8r4u-aDzx7gLkDMqIHCN6cPJKIDdN_0=s200"},
+  {name:"CazéTV",cat:"Esportes",slug:"cazetv",img:"https://yt3.googleusercontent.com/cGEmBaCqCaCIKUYaJSO2h3USv7iVpVKKL5GWQO5MaZL8r4u-aDzx7gLkDMqIHCN6cPJKIDdN_0=s200"},
+  {name:"Band Sports",cat:"Esportes",slug:"pt-bandsports",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Band_logo_%282023%29.svg/200px-Band_logo_%282023%29.svg.png"},
+  {name:"UFC Fight Pass",cat:"Esportes",slug:"ufcfightpass",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/9/92/UFC_Logo.svg/200px-UFC_Logo.svg.png"},
   // Filmes / Entretenimento
-  {name:"Telecine",cat:"Filmes",slug:"telecine",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Logo_Telecine_2020.svg/200px-Logo_Telecine_2020.svg.png"},
+  {name:"Telecine",cat:"Filmes",slug:"pt-telecine",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Logo_Telecine_2020.svg/200px-Logo_Telecine_2020.svg.png"},
   {name:"HBO",cat:"Filmes",slug:"hbo",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/HBO_logo.svg/200px-HBO_logo.svg.png"},
   {name:"TNT",cat:"Filmes",slug:"tnt",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/TNT_Logo_2016.svg/200px-TNT_Logo_2016.svg.png"},
-  {name:"Megapix",cat:"Filmes",slug:"megapix",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Megapix_2020.svg/200px-Megapix_2020.svg.png"},
+  {name:"Megapix",cat:"Filmes",slug:"pt-megapix",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Megapix_2020.svg/200px-Megapix_2020.svg.png"},
   // Variedades
-  {name:"Multishow",cat:"Variedades",slug:"multishow",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Multishow_2021.svg/200px-Multishow_2021.svg.png"},
-  {name:"GloboNews",cat:"Notícias",slug:"globonews",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/2/2d/GloboNews_logo_2024.svg/200px-GloboNews_logo_2024.svg.png"},
-  {name:"CNN Brasil",cat:"Notícias",slug:"cnn-brasil",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/CNN_Brasil_2024.svg/200px-CNN_Brasil_2024.svg.png"},
-  {name:"BandNews",cat:"Notícias",slug:"bandnews",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/3/32/Band_News_TV.png/200px-Band_News_TV.png"},
+  {name:"Multishow",cat:"Variedades",slug:"pt-multishow",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Multishow_2021.svg/200px-Multishow_2021.svg.png"},
+  {name:"GloboNews",cat:"Notícias",slug:"pt-globonews",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/2/2d/GloboNews_logo_2024.svg/200px-GloboNews_logo_2024.svg.png"},
+  {name:"CNN Brasil",cat:"Notícias",slug:"pt-cnnbrasil",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/CNN_Brasil_2024.svg/200px-CNN_Brasil_2024.svg.png"},
+  {name:"BandNews",cat:"Notícias",slug:"pt-bandnews",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/3/32/Band_News_TV.png/200px-Band_News_TV.png"},
   {name:"Discovery",cat:"Variedades",slug:"discovery-channel",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Discovery_Channel_-_Logo_2019.svg/200px-Discovery_Channel_-_Logo_2019.svg.png"},
   {name:"Cartoon Network",cat:"Infantil",slug:"cartoon-network",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Cartoon_Network_2010_logo.svg/200px-Cartoon_Network_2010_logo.svg.png"},
   {name:"Disney Channel",cat:"Infantil",slug:"disney-channel",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/Disney_Channel_Logo_2014.svg/200px-Disney_Channel_Logo_2014.svg.png"},
   {name:"Nickelodeon",cat:"Infantil",slug:"nickelodeon",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/Nickelodeon_2023_logo_%28outline%29.svg/200px-Nickelodeon_2023_logo_%28outline%29.svg.png"},
-  {name:"History",cat:"Variedades",slug:"history-channel",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/History_Logo_2024.svg/200px-History_Logo_2024.svg.png"},
+  {name:"History",cat:"Variedades",slug:"history",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/History_Logo_2024.svg/200px-History_Logo_2024.svg.png"},
   {name:"A&E",cat:"Variedades",slug:"ae",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/A%26E_Network_logo_2024.svg/200px-A%26E_Network_logo_2024.svg.png"},
   {name:"National Geographic",cat:"Variedades",slug:"national-geographic",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/Natgeo.svg/200px-Natgeo.svg.png"}
 ];
 
-const TV_SERVERS=[
-  {n:"Servidor 1",u:"https://rfrfrfrf.xyz/live/",suffix:"/hls/pt.m3u8"},
-  {n:"Servidor 2",u:"https://mzcloud.life/live/",suffix:""},
-  {n:"Servidor 3",u:"https://stfreetv.fun/live/",suffix:""}
+const TV_BASES=[
+  {n:"Servidor 1",u:"https://multicanais.im/canal/"},
+  {n:"Servidor 2",u:"https://embedcanaisonline.com/canal/"},
+  {n:"Servidor 3",u:"https://embeddecanais.com/canal/"}
 ];
 
 function openTV(ch){
@@ -477,93 +481,46 @@ function openTV(ch){
   document.body.style.overflow="hidden";
 
   let srvBtns='';
-  TV_SERVERS.forEach((s,i)=>{
+  TV_BASES.forEach((s,i)=>{
     srvBtns+=`<button class="srv-btn${i===0?' active':''}" onclick="window._tvSwitchSrv(${i},'${ch.slug}')">${s.n}</button>`;
   });
 
-  const embedUrl=TV_SERVERS[0].u+ch.slug+TV_SERVERS[0].suffix;
+  const embedUrl=TV_BASES[0].u+ch.slug;
   pw.innerHTML=`
     <div class="embed-wrap">
       <div class="embed-topbar">
         <div class="embed-brand">CineVault</div>
         <div class="srv-row">${srvBtns}</div>
       </div>
-      <iframe id="cvFrame" src="${embedUrl}" frameborder="0" allowfullscreen allow="autoplay;encrypted-media" style="width:100%;height:100%;position:absolute;top:0;left:0"></iframe>
+      <iframe id="cvFrame" src="${embedUrl}" frameborder="0" allowfullscreen allow="autoplay;encrypted-media" style="width:100%;height:100%;position:absolute;top:0;left:0" referrerpolicy="no-referrer"></iframe>
     </div>`;
 
-  // Auto-fallback
+  // Auto-fallback entre servidores
   let tvTrying=true;
-  const check1=setTimeout(()=>{
-    if(!tvTrying)return;
+  const tryNext=(idx)=>{
+    if(!tvTrying||idx>=TV_BASES.length)return;
     const ifr=document.getElementById("cvFrame");
-    if(ifr){ifr.src=TV_SERVERS[1].u+ch.slug+TV_SERVERS[1].suffix;document.querySelectorAll('.srv-btn').forEach((b,i)=>b.classList.toggle('active',i===1));}
-    const check2=setTimeout(()=>{
-      if(!tvTrying)return;
-      if(ifr){ifr.src=TV_SERVERS[2].u+ch.slug+TV_SERVERS[2].suffix;document.querySelectorAll('.srv-btn').forEach((b,i)=>b.classList.toggle('active',i===2));}
-    },6000);
-    const ifr2=document.getElementById("cvFrame");
-    if(ifr2)ifr2.onload=()=>{tvTrying=false;clearTimeout(check2);};
-  },8000);
+    if(!ifr)return;
+    ifr.src=TV_BASES[idx].u+ch.slug;
+    document.querySelectorAll('.srv-btn').forEach((b,i)=>b.classList.toggle('active',i===idx));
+    const check=setTimeout(()=>tryNext(idx+1),8000);
+    ifr.onload=()=>{tvTrying=false;clearTimeout(check);};
+  };
   const ifr=document.getElementById("cvFrame");
-  if(ifr)ifr.onload=()=>{tvTrying=false;clearTimeout(check1);};
+  if(ifr){
+    const check0=setTimeout(()=>tryNext(1),8000);
+    ifr.onload=()=>{tvTrying=false;clearTimeout(check0);};
+  }
 }
 
 window._tvSwitchSrv=function(idx,slug){
   const ifr=document.getElementById("cvFrame");
-  if(!ifr)return;
-  ifr.src=TV_SERVERS[idx].u+slug+TV_SERVERS[idx].suffix;
+  if(!ifr||!TV_BASES[idx])return;
+  ifr.src=TV_BASES[idx].u+slug;
   document.querySelectorAll('.srv-btn').forEach((b,i)=>b.classList.toggle('active',i===idx));
 };
 
-// Sports embed servers
-const SPORT_SERVERS=[
-  {n:"Servidor 1",u:"https://embedme.top/embed/",tpl:"{league}/{team1}-vs-{team2}/1"},
-  {n:"MultiCanais",u:"https://multicanais.fun/assistir/",tpl:"{slug}"},
-  {n:"FuteMax",u:"https://futemax.gratis/assistir/",tpl:"{slug}"}
-];
-
-function openSport(match){
-  const pw=document.getElementById("pw");
-  const epsel=document.getElementById("epsel");
-  epsel.style.display='none';
-  epsel.innerHTML='';
-
-  document.getElementById("pt").textContent=match.home+" x "+match.away;
-  const badge=document.getElementById("ptb");
-  badge.textContent=match.league+(match.live?" · AO VIVO":"");
-  badge.style.background=match.live?"var(--red)":"var(--green)";
-  document.getElementById("pdur").textContent=match.time||"";
-  document.getElementById("pd").textContent=match.league+" — "+match.home+" x "+match.away+". Selecione um servidor para assistir.";
-  document.getElementById("ov").classList.add("open");
-  document.body.style.overflow="hidden";
-
-  const slug=match.slug||(match.home.toLowerCase().replace(/\s+/g,'-')+"-x-"+match.away.toLowerCase().replace(/\s+/g,'-'));
-  const embedUrl="https://multicanais.fun/assistir/"+slug+"/";
-
-  let srvBtns='<button class="srv-btn active" onclick="window._sportSrv(0)">Servidor 1</button><button class="srv-btn" onclick="window._sportSrv(1)">Servidor 2</button><button class="srv-btn" onclick="window._sportSrv(2)">Servidor 3</button>';
-
-  const urls=[
-    "https://multicanais.fun/assistir/"+slug+"/",
-    "https://embedme.top/embed/"+slug+"/1",
-    "https://futemax.gratis/assistir/"+slug+"/"
-  ];
-
-  pw.innerHTML=`
-    <div class="embed-wrap">
-      <div class="embed-topbar">
-        <div class="embed-brand">CineVault</div>
-        <div class="srv-row">${srvBtns}</div>
-      </div>
-      <iframe id="cvFrame" src="${urls[0]}" frameborder="0" allowfullscreen allow="autoplay;encrypted-media" style="width:100%;height:100%;position:absolute;top:0;left:0"></iframe>
-    </div>`;
-
-  window._sportUrls=urls;
-  window._sportSrv=function(idx){
-    const ifr=document.getElementById("cvFrame");
-    if(ifr)ifr.src=window._sportUrls[idx];
-    document.querySelectorAll('.srv-btn').forEach((b,i)=>b.classList.toggle('active',i===idx));
-  };
-}
+/* Esportes usa openTV() direto — canais esportivos via multicanais.im */
 
 function renderTV(){
   const ct=document.getElementById("content");
@@ -591,82 +548,29 @@ function renderTV(){
   });
 }
 
-async function renderEsportes(){
+function renderEsportes(){
   const ct=document.getElementById("content");
-  ct.innerHTML='<div class="nores"><div class="pl-spinner" style="margin:0 auto"></div><p style="margin-top:12px">Carregando jogos...</p></div>';
-
-  // Busca jogos de hoje via API pública do API-Football
-  let matches=[];
-  try{
-    const today=new Date().toISOString().split('T')[0];
-    // Usar TMDB-like approach — busca via sites de agregação
-    // Alternativa: lista estática com principais ligas
-    const leagues=[
-      {name:"Brasileirão Série A",id:71,flag:"🇧🇷"},
-      {name:"Copa do Brasil",id:73,flag:"🇧🇷"},
-      {name:"Libertadores",id:13,flag:"🏆"},
-      {name:"Sul-Americana",id:11,flag:"🏆"},
-      {name:"Champions League",id:2,flag:"🇪🇺"},
-      {name:"Premier League",id:39,flag:"🏴󠁧󠁢󠁥󠁮󠁧󠁿"},
-      {name:"La Liga",id:140,flag:"🇪🇸"},
-      {name:"Serie A (Itália)",id:135,flag:"🇮🇹"},
-      {name:"Ligue 1",id:61,flag:"🇫🇷"},
-      {name:"Bundesliga",id:78,flag:"🇩🇪"}
-    ];
-
-    // Busca multicanais para jogos ao vivo
-    matches=[
-      {home:"Palmeiras",away:"Fluminense",league:"Copa Libertadores",time:"21:30",live:true,slug:"palmeiras-x-fluminense"},
-      {home:"São Paulo (F)",away:"Bahia (F)",league:"Copa do Brasil (F)",time:"19:00",live:false,slug:"sao-paulo-f-x-bahia-f"},
-      {home:"Bayern de Munique",away:"Arsenal",league:"Liga dos Campeões",time:"16:00",live:false,slug:"bayern-de-munique-x-arsenal"},
-      {home:"Real Madrid",away:"RB Leipzig",league:"Liga dos Campeões",time:"16:00",live:false,slug:"real-madrid-x-rb-leipzig"},
-      {home:"Inter de Milão",away:"Shakhtar Donetsk",league:"Liga dos Campeões",time:"16:00",live:false,slug:"inter-de-milao-x-shakhtar-donetsk"},
-      {home:"Aston Villa",away:"Viking",league:"Liga dos Campeões",time:"16:00",live:false,slug:"aston-villa-x-viking"},
-      {home:"Sporting CP",away:"LASK Linz",league:"Liga dos Campeões",time:"16:00",live:false,slug:"sporting-cp-x-lask-linz"},
-      {home:"Club Brugge",away:"Lens",league:"Liga dos Campeões",time:"16:00",live:false,slug:"club-brugge-x-lens"},
-      {home:"Real Betis",away:"Feyenoord",league:"Liga dos Campeões",time:"16:00",live:false,slug:"real-betis-x-feyenoord"},
-      {home:"Palmeiras (F)",away:"Ind. Dragones (F)",league:"Copa Libertadores (F)",time:"21:00",live:false,slug:"palmeiras-f-x-ind-dragones-f"},
-      {home:"Montevideo City",away:"Atlético-MG",league:"Copa Sul-Americana",time:"19:00",live:false,slug:"montevideo-city-x-atletico-mg"},
-      {home:"Ind. Santa Fé (F)",away:"Corinthians (F)",league:"Copa Libertadores (F)",time:"17:00",live:false,slug:"ind-santa-fe-f-x-corinthians-f"}
-    ];
-  }catch(e){
-    console.error("Erro ao buscar jogos:",e);
-  }
-
   ct.innerHTML="";
-
-  if(!matches.length){
-    ct.innerHTML='<div class="nores"><h3>Nenhum jogo encontrado</h3><p>Não há jogos programados para hoje.</p></div>';
+  const sportChannels=TV_CHANNELS.filter(c=>c.cat==="Esportes");
+  if(!sportChannels.length){
+    ct.innerHTML='<div class="nores"><h3>Nenhum canal esportivo</h3><p>Canais esportivos não disponíveis.</p></div>';
     return;
   }
-
-  // Agrupar por liga
-  const byLeague={};
-  matches.forEach(m=>{
-    if(!byLeague[m.league])byLeague[m.league]=[];
-    byLeague[m.league].push(m);
+  const sec=document.createElement("div");sec.className="sec";
+  sec.innerHTML=`<div class="sec-h"><span class="sec-t">Canais de Esportes <span class="live-badge"><span class="tv-live-dot"></span>AO VIVO</span></span><span class="sec-c">${sportChannels.length} canais</span></div>`;
+  const grid=document.createElement("div");grid.className="tv-grid";
+  sportChannels.forEach(ch=>{
+    const card=document.createElement("div");card.className="tv-card";
+    card.onclick=()=>openTV(ch);
+    card.innerHTML=`
+      <div class="tv-card-img"><img src="${ch.img}" alt="${ch.name}" onerror="this.parentElement.innerHTML='<span style=font-size:1.2rem;font-weight:700;color:var(--dim)>${ch.name}</span>'"></div>
+      <div class="tv-card-info">
+        <div class="tv-card-name"><span class="tv-live-dot"></span>${ch.name}</div>
+        <div class="tv-card-tag">Esportes</div>
+      </div>`;
+    grid.appendChild(card);
   });
-
-  Object.entries(byLeague).forEach(([league,games])=>{
-    const sec=document.createElement("div");sec.className="sport-sec";
-    const hasLive=games.some(g=>g.live);
-    sec.innerHTML=`<div class="sec-h"><span class="sec-t">${league} ${hasLive?'<span class="live-badge"><span class="tv-live-dot"></span>AO VIVO</span>':''}</span><span class="sec-c">${games.length} jogos</span></div>`;
-    const grid=document.createElement("div");grid.className="sport-grid";
-    games.forEach(m=>{
-      const card=document.createElement("div");card.className="sport-card";
-      card.onclick=()=>openSport(m);
-      card.innerHTML=`
-        <div class="sport-card-league">${m.live?'<span class="tv-live-dot"></span>':''}${league}</div>
-        <div class="sport-card-teams">
-          <span>${m.home}</span>
-          <span class="sport-card-vs">X</span>
-          <span>${m.away}</span>
-        </div>
-        <div class="sport-card-time">${m.live?'🔴 Ao Vivo':'🕐 '+m.time}</div>`;
-      grid.appendChild(card);
-    });
-    sec.appendChild(grid);ct.appendChild(sec);
-  });
+  sec.appendChild(grid);ct.appendChild(sec);
 }
 
 // Tabs

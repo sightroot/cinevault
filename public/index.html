@@ -431,12 +431,10 @@ function goHome(){tab="all";query="";page=0;cfilt="all";
 }
 
 function filtered(){
-  // For static tabs (filme or "all"), filter from C
   let items=C;
   if(tab==="filme") items=items.filter(c=>c.type==="filme");
-  else if(tab==="all"&&!query) return items; // homepage shows all static + dynamic sections
-  else if(tab==="all"&&query) items=items.filter(c=>c.t.toLowerCase().includes(query));
-  else if(tab==="filme"&&query) items=items.filter(c=>c.t.toLowerCase().includes(query));
+  else if(tab==="all"&&!query) return items;
+  if(query) items=items.filter(c=>c.t.toLowerCase().includes(query));
   if(tab==="dorama"&&cfilt!=="all") items=items.filter(c=>c.c===cfilt);
   return items;
 }

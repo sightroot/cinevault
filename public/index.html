@@ -224,13 +224,16 @@ a{color:inherit;text-decoration:none}
         <div class="gate-price-val">R$ 19<small>,90</small></div>
         <div class="gate-price-info">Pagamento único · Acesso vitalício · PIX</div>
       </div>
-      <input class="gate-input" id="buyName" type="text" placeholder="Seu nome" autocomplete="name">
-      <input class="gate-input" id="buyEmail" type="email" placeholder="Seu melhor e-mail" autocomplete="email">
-      <input class="gate-input" id="buyCpf" type="text" placeholder="CPF (opcional)" autocomplete="off" maxlength="14">
-      <button class="gate-btn gate-btn-green" id="buyBtn" onclick="gateCheckout()">Pagar com PIX — R$ 19,90</button>
-      <div class="gate-err" id="buyErr"></div>
-      <div class="gate-msg" id="buyMsg"></div>
-      <div id="pixResult"></div>
+      <div style="display:flex;flex-direction:column;gap:8px;margin-top:12px">
+        <div style="display:flex;align-items:center;gap:10px;color:var(--dim);font-size:.78rem"><span style="color:var(--green);font-size:1.1rem">✓</span> +3.700 títulos com áudio dublado</div>
+        <div style="display:flex;align-items:center;gap:10px;color:var(--dim);font-size:.78rem"><span style="color:var(--green);font-size:1.1rem">✓</span> Filmes, Séries, Animes e Doramas</div>
+        <div style="display:flex;align-items:center;gap:10px;color:var(--dim);font-size:.78rem"><span style="color:var(--green);font-size:1.1rem">✓</span> Acesso vitalício — pague uma vez só</div>
+        <div style="display:flex;align-items:center;gap:10px;color:var(--dim);font-size:.78rem"><span style="color:var(--green);font-size:1.1rem">✓</span> Player HD integrado com 7 servidores</div>
+      </div>
+      <a href="https://pagseguropix.org/c/cinevault-premium" target="_blank" style="text-decoration:none;display:block;margin-top:20px">
+        <button class="gate-btn gate-btn-green" type="button" style="width:100%">Comprar agora — R$ 19,90</button>
+      </a>
+      <p style="font-size:.68rem;color:var(--dim2);margin-top:12px">Após o pagamento, use o e-mail da compra na aba "Já comprei".</p>
     </div>
   </div>
 </div>
@@ -942,94 +945,7 @@ async function gateVerify() {
   btn.textContent = "Acessar Catálogo";
 }
 
-// CPF mask
-document.getElementById("buyCpf").addEventListener("input", function() {
-  let v = this.value.replace(/\D/g, "").slice(0, 11);
-  if (v.length > 9) v = v.replace(/(\d{3})(\d{3})(\d{3})(\d{1,2})/, "$1.$2.$3-$4");
-  else if (v.length > 6) v = v.replace(/(\d{3})(\d{3})(\d{1,3})/, "$1.$2.$3");
-  else if (v.length > 3) v = v.replace(/(\d{3})(\d{1,3})/, "$1.$2");
-  this.value = v;
-});
-
-async function gateCheckout() {
-  const name = document.getElementById("buyName").value.trim();
-  const email = document.getElementById("buyEmail").value.trim().toLowerCase();
-  const cpf = document.getElementById("buyCpf").value.replace(/\D/g, "");
-  const errEl = document.getElementById("buyErr");
-  const msgEl = document.getElementById("buyMsg");
-  const btn = document.getElementById("buyBtn");
-  errEl.textContent = "";
-  msgEl.textContent = "";
-
-  if (!name) { errEl.textContent = "Digite seu nome."; return; }
-  if (!email || !email.includes("@") || !email.includes(".")) {
-    errEl.textContent = "Digite um e-mail válido.";
-    return;
-  }
-
-  btn.disabled = true;
-  btn.textContent = "Gerando PIX...";
-
-  try {
-    const res = await fetch("/api/create-checkout", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name, email, cpf: cpf || undefined })
-    });
-    const data = await res.json();
-
-    if (!res.ok || data.error) {
-      errEl.textContent = data.error || "Erro ao gerar pagamento. Tente novamente.";
-      btn.disabled = false;
-      btn.textContent = "Pagar com PIX — R$ 19,90";
-      return;
-    }
-
-    // Se a BravoPay retornar URL de checkout externo, redireciona
-    if (data.pix_url && !data.pix_code) {
-      window.open(data.pix_url, "_blank");
-      msgEl.textContent = "Página de pagamento aberta. Após pagar, clique em 'Já comprei'.";
-      btn.disabled = false;
-      btn.textContent = "Pagar com PIX — R$ 19,90";
-      return;
-    }
-
-    // Mostra código PIX inline
-    let html = '<h4>PIX gerado com sucesso!</h4>';
-
-    if (data.pix_qr) {
-      html += `<div class="gate-pix-qr"><img src="${data.pix_qr}" alt="QR Code PIX"></div>`;
-    }
-
-    if (data.pix_code) {
-      html += `<textarea class="gate-pix-code" id="pixCode" readonly>${data.pix_code}</textarea>`;
-      html += `<button class="gate-pix-copy" onclick="copyPix()">Copiar código PIX</button>`;
-    }
-
-    html += `<p class="gate-pix-wait">Após o pagamento ser confirmado, seu acesso será liberado automaticamente.<br>Use o e-mail <strong>${email}</strong> na aba "Já comprei".</p>`;
-
-    document.getElementById("pixResult").innerHTML = html;
-    msgEl.textContent = "Escaneie o QR Code ou copie o código PIX.";
-    btn.style.display = "none";
-
-  } catch (err) {
-    errEl.textContent = "Erro de conexão. Tente novamente.";
-  }
-
-  btn.disabled = false;
-  btn.textContent = "Pagar com PIX — R$ 19,90";
-}
-
-function copyPix() {
-  const code = document.getElementById("pixCode");
-  if (code) {
-    code.select();
-    document.execCommand("copy");
-    const btn = code.nextElementSibling;
-    btn.textContent = "Copiado!";
-    setTimeout(() => btn.textContent = "Copiar código PIX", 2000);
-  }
-}
+// Checkout is handled by external BravoPay link
 
 document.getElementById("gateEmail").addEventListener("keydown", e => {
   if (e.key === "Enter") gateVerify();

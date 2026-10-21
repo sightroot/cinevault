@@ -29,8 +29,13 @@ function isApproved(obj) {
   const statusKeys = ["status", "payment_status", "transaction_status", "state"];
   const approvedValues = [
     "approved", "paid", "completed", "confirmed", "settled",
-    "aprovado", "pago", "concluido", "confirmado"
+    "aprovado", "pago", "concluido", "confirmado",
+    "transaction.paid"
   ];
+  // BravoPay event types: transaction.paid, transaction.created, etc.
+  if (obj.event && typeof obj.event === "string") {
+    if (approvedValues.includes(obj.event.toLowerCase())) return true;
+  }
   for (const key of statusKeys) {
     if (obj[key] && typeof obj[key] === "string") {
       if (approvedValues.includes(obj[key].toLowerCase())) return true;

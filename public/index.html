@@ -460,10 +460,16 @@ const TV_CHANNELS=[
 ];
 
 const TV_BASES=[
-  {n:"Servidor 1",u:"https://multicanais.im/canal/"},
-  {n:"Servidor 2",u:"https://embedcanaisonline.com/canal/"},
-  {n:"Servidor 3",u:"https://embeddecanais.com/canal/"}
+  {n:"Servidor 1",u:"https://embedcanais.online/canal/"},
+  {n:"Servidor 2",u:"https://1.embedcanaisdetv.com/canal/"},
+  {n:"Servidor 3",u:"https://embedcanais.top/canal/"},
+  {n:"Servidor 4",u:"https://embeddecanais.com/canal/"},
+  {n:"Servidor 5",u:"https://embedcanaisonline.com/canal/"}
 ];
+
+let _tvCurrentSlug='';
+let _tvCurrentIdx=0;
+let _tvAutoFallback=null;
 
 function openTV(ch){
   const pw=document.getElementById("pw");
@@ -480,47 +486,126 @@ function openTV(ch){
   document.getElementById("ov").classList.add("open");
   document.body.style.overflow="hidden";
 
+  _tvCurrentSlug=ch.slug;
+  _tvCurrentIdx=0;
+  if(_tvAutoFallback){clearTimeout(_tvAutoFallback);_tvAutoFallback=null;}
+
   let srvBtns='';
   TV_BASES.forEach((s,i)=>{
     srvBtns+=`<button class="srv-btn${i===0?' active':''}" onclick="window._tvSwitchSrv(${i},'${ch.slug}')">${s.n}</button>`;
   });
 
-  const embedUrl=TV_BASES[0].u+ch.slug;
   pw.innerHTML=`
     <div class="embed-wrap">
       <div class="embed-topbar">
         <div class="embed-brand">CineVault</div>
         <div class="srv-row">${srvBtns}</div>
       </div>
-      <iframe id="cvFrame" src="${embedUrl}" frameborder="0" allowfullscreen allow="autoplay;encrypted-media" style="width:100%;height:100%;position:absolute;top:0;left:0" referrerpolicy="no-referrer"></iframe>
+      <div id="tvStatus" style="position:absolute;bottom:12px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.75);color:#aaa;font-size:.72rem;padding:4px 12px;border-radius:6px;z-index:11;pointer-events:none;transition:opacity .3s;opacity:1">Conectando ao ${TV_BASES[0].n}...</div>
+      <iframe id="cvFrame" src="${TV_BASES[0].u+ch.slug}" frameborder="0" allowfullscreen allow="autoplay;encrypted-media" style="width:100%;height:100%;position:absolute;top:0;left:0" referrerpolicy="no-referrer"></iframe>
     </div>`;
 
-  // Auto-fallback entre servidores
-  let tvTrying=true;
-  const tryNext=(idx)=>{
-    if(!tvTrying||idx>=TV_BASES.length)return;
-    const ifr=document.getElementById("cvFrame");
-    if(!ifr)return;
-    ifr.src=TV_BASES[idx].u+ch.slug;
-    document.querySelectorAll('.srv-btn').forEach((b,i)=>b.classList.toggle('active',i===idx));
-    const check=setTimeout(()=>tryNext(idx+1),8000);
-    ifr.onload=()=>{tvTrying=false;clearTimeout(check);};
-  };
+  _tvStartFallbackChain(ch.slug,0);
+}
+
+function _tvStartFallbackChain(slug,startIdx){
+  if(_tvAutoFallback){clearTimeout(_tvAutoFallback);_tvAutoFallback=null;}
+  _tvCurrentIdx=startIdx;
   const ifr=document.getElementById("cvFrame");
-  if(ifr){
-    const check0=setTimeout(()=>tryNext(1),8000);
-    ifr.onload=()=>{tvTrying=false;clearTimeout(check0);};
+  const status=document.getElementById("tvStatus");
+  if(!ifr)return;
+
+  let settled=false;
+
+  // Se o iframe carrega conteúdo real, consideramos sucesso
+  ifr.onload=()=>{
+    settled=true;
+    if(_tvAutoFallback){clearTimeout(_tvAutoFallback);_tvAutoFallback=null;}
+    if(status)status.style.opacity='0';
+  };
+
+  // onerror é chamado quando ERR_CONNECTION_REFUSED, DNS fail, etc.
+  ifr.onerror=()=>{
+    if(settled)return;
+    _tvTryNextServer(slug);
+  };
+
+  // Timeout — se em 6s não carregou, tenta próximo servidor
+  _tvAutoFallback=setTimeout(()=>{
+    if(settled)return;
+    _tvTryNextServer(slug);
+  },6000);
+}
+
+function _tvTryNextServer(slug){
+  if(_tvAutoFallback){clearTimeout(_tvAutoFallback);_tvAutoFallback=null;}
+  const nextIdx=_tvCurrentIdx+1;
+  if(nextIdx>=TV_BASES.length){
+    // Todos os servidores falharam — mostrar mensagem
+    const status=document.getElementById("tvStatus");
+    if(status){
+      status.textContent="Nenhum servidor disponível no momento. Tente novamente mais tarde.";
+      status.style.opacity='1';
+      status.style.color='#f87171';
+    }
+    return;
   }
+  _tvCurrentIdx=nextIdx;
+  const ifr=document.getElementById("cvFrame");
+  const status=document.getElementById("tvStatus");
+  if(!ifr)return;
+
+  if(status){
+    status.textContent=`Tentando ${TV_BASES[nextIdx].n}...`;
+    status.style.opacity='1';
+    status.style.color='#aaa';
+  }
+  ifr.src=TV_BASES[nextIdx].u+slug;
+  document.querySelectorAll('.srv-btn').forEach((b,i)=>b.classList.toggle('active',i===nextIdx));
+
+  let settled=false;
+  ifr.onload=()=>{
+    settled=true;
+    if(_tvAutoFallback){clearTimeout(_tvAutoFallback);_tvAutoFallback=null;}
+    if(status)status.style.opacity='0';
+  };
+  ifr.onerror=()=>{
+    if(settled)return;
+    _tvTryNextServer(slug);
+  };
+  _tvAutoFallback=setTimeout(()=>{
+    if(settled)return;
+    _tvTryNextServer(slug);
+  },6000);
 }
 
 window._tvSwitchSrv=function(idx,slug){
+  if(_tvAutoFallback){clearTimeout(_tvAutoFallback);_tvAutoFallback=null;}
   const ifr=document.getElementById("cvFrame");
+  const status=document.getElementById("tvStatus");
   if(!ifr||!TV_BASES[idx])return;
   ifr.src=TV_BASES[idx].u+slug;
+  _tvCurrentIdx=idx;
   document.querySelectorAll('.srv-btn').forEach((b,i)=>b.classList.toggle('active',i===idx));
+  if(status){
+    status.textContent=`Conectando ao ${TV_BASES[idx].n}...`;
+    status.style.opacity='1';
+    status.style.color='#aaa';
+  }
+  // Não inicia auto-fallback no clique manual — o usuário escolheu
+  let settled=false;
+  ifr.onload=()=>{
+    settled=true;
+    if(status)status.style.opacity='0';
+  };
+  // Timeout apenas para esconder status
+  setTimeout(()=>{
+    if(!settled&&status){
+      status.textContent="Servidor pode estar indisponível. Tente outro.";
+      status.style.color='#fbbf24';
+    }
+  },10000);
 };
-
-/* Esportes usa openTV() direto — canais esportivos via multicanais.im */
 
 function renderTV(){
   const ct=document.getElementById("content");

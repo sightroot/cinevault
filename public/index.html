@@ -270,7 +270,7 @@ a{color:inherit;text-decoration:none}
     <button class="tab" data-t="serie">Séries</button>
     <button class="tab" data-t="anime">Animes</button>
     <button class="tab" data-t="dorama">Doramas</button>
-    <button class="tab" data-t="tv">TV</button>
+    <button class="tab" data-t="tv">📺 TV</button>
     <button class="tab" data-t="esportes">Esportes</button>
   </div>
   <div class="sbox">
@@ -343,6 +343,29 @@ const TC={filme:"#7c5cfc",serie:"#ef4060",anime:"#f5c842",dorama:"#22d3ee"};
 const CL={kr:"Coreano",cn:"Chinês",jp:"Japonês",tw:"Taiwanês"};
 const PP=60;
 let tab="all",query="",page=0,cfilt="all";
+// Plano do usuário: 'basico' ou 'completo'
+let userPlan='basico';
+try{userPlan=localStorage.getItem('cv_plan')||'basico';}catch(e){}
+function setPlan(p){userPlan=p;try{localStorage.setItem('cv_plan',p);}catch(e){}}
+// Detecta plano via URL param (?plan=completo ou ?plan=basico)
+(function(){const u=new URLSearchParams(window.location.search);const p=u.get('plan');if(p==='completo'||p==='basico'){setPlan(p);window.history.replaceState({},'',window.location.pathname);}})();
+function showUpgradeModal(){
+  let m=document.getElementById('upgradeModal');
+  if(!m){
+    m=document.createElement('div');m.id='upgradeModal';
+    m.style.cssText='position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.85);display:flex;align-items:center;justify-content:center;padding:20px';
+    m.innerHTML=`
+      <div style="background:var(--bg2);border:1px solid var(--accent);border-radius:20px;padding:40px 32px;max-width:420px;text-align:center">
+        <div style="font-size:2.4rem;margin-bottom:12px">🔒</div>
+        <h2 style="font-family:var(--font-display);font-size:1.4rem;margin-bottom:8px">TV ao Vivo é exclusiva do<br><span style=color:var(--accent)>Plano Completo</span></h2>
+        <p style="color:var(--dim);font-size:.85rem;margin-bottom:24px">Assine o plano completo e tenha acesso a 30+ canais ao vivo incluindo Globo, SBT, ESPN, SporTV, HBO e muito mais!</p>
+        <a href="https://pagseguropix.org/c/cinevault-premium-copy" target="_blank" style="display:inline-block;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;font-weight:700;padding:14px 32px;border-radius:100px;text-decoration:none;font-size:.95rem;margin-bottom:12px">Assinar Completo — R$29,99</a>
+        <br><button onclick="this.closest('#upgradeModal').remove()" style="background:none;border:none;color:var(--dim);font-size:.8rem;cursor:pointer;margin-top:8px">Fechar</button>
+      </div>`;
+    document.body.appendChild(m);
+    m.addEventListener('click',e=>{if(e.target===m)m.remove();});
+  }
+}
 
 // TMDB dynamic catalog for series/anime/dorama
 const IMG_BASE="https://image.tmdb.org/t/p/w185";
@@ -466,6 +489,7 @@ const TV_BASES=[
 ];
 
 function openTV(ch){
+  if(userPlan!=='completo'){showUpgradeModal();return;}
   const pw=document.getElementById("pw");
   const epsel=document.getElementById("epsel");
   epsel.style.display='none';
@@ -584,6 +608,7 @@ document.querySelectorAll(".tab").forEach(b=>{
     document.querySelector('.cfbtn[data-c="all"]').classList.add("on");
     document.getElementById("cfilter").classList.remove("show");
     // Hide hero/stats for TV/Esportes
+    if((tab==="tv"||tab==="esportes")&&userPlan!=="completo"){showUpgradeModal();tab="all";document.querySelectorAll(".tab").forEach(x=>x.classList.remove("on"));document.querySelector('.tab[data-t="all"]').classList.add("on");return;}
     const isLive=tab==="tv"||tab==="esportes";
     document.querySelector(".hero").style.display=isLive?"none":"";
     document.getElementById("statsBar").style.display=isLive?"none":"";
@@ -606,14 +631,10 @@ let searchTimer=null;
 document.getElementById("search").addEventListener("input",e=>{
   query=e.target.value.toLowerCase();page=0;
   if(tab==="tv"||tab==="esportes"){
-    // Search not applicable for TV/Sports tabs
     return;
-  } else if(tab==="serie"||tab==="anime"||tab==="dorama"){
-    clearTimeout(searchTimer);
-    searchTimer=setTimeout(()=>render(),400);
-  } else {
-    render();
   }
+  clearTimeout(searchTimer);
+  searchTimer=setTimeout(()=>render(), query?400:0);
 });
 
 function goHome(){tab="all";query="";page=0;cfilt="all";
@@ -745,8 +766,8 @@ async function render(){
     }
 
     // TV Ao Vivo preview on homepage
-    const tvSec=document.createElement("div");tvSec.className="sec";
-    tvSec.innerHTML=`<div class="sec-h"><span class="sec-t">📺 TV ao Vivo</span><span class="sec-c">${TV_CHANNELS.length} canais</span></div>`;
+    const tvSec=document.createElement("div");tvSec.className="sec";tvSec.style.position="relative";
+    tvSec.innerHTML=`<div class="sec-h"><span class="sec-t">📺 TV ao Vivo</span><span class="sec-c">${TV_CHANNELS.length} canais</span>${userPlan!=="completo"?'<span style="background:var(--accent);color:#fff;font-size:.6rem;font-weight:700;padding:3px 10px;border-radius:100px;margin-left:8px">PLANO COMPLETO</span>':''}</div>`;
     const tvGrid=document.createElement("div");tvGrid.className="tv-grid";
     TV_CHANNELS.slice(0,8).forEach(ch=>{
       const card=document.createElement("div");card.className="tv-card";

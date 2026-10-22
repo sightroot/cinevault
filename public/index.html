@@ -420,56 +420,50 @@ updateStats();
 
 const TV_CHANNELS=[
   // TV Aberta
-  {name:"Globo",cat:"TV Aberta",slug:"pt-globo",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/1/1f/Rede_Globo_logo_%282024%29.svg/200px-Rede_Globo_logo_%282024%29.svg.png"},
-  {name:"SBT",cat:"TV Aberta",slug:"pt-sbt",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/f/f4/SBT_logo_%282024%29.svg/200px-SBT_logo_%282024%29.svg.png"},
-  {name:"Record TV",cat:"TV Aberta",slug:"pt-recordtv",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/RecordTV_logo_%282016%29.svg/200px-RecordTV_logo_%282016%29.svg.png"},
-  {name:"Band",cat:"TV Aberta",slug:"pt-band",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Band_logo_%282023%29.svg/200px-Band_logo_%282023%29.svg.png"},
-  {name:"RedeTV!",cat:"TV Aberta",slug:"pt-redetv",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/RedeTV%21_logo_%282019%29.svg/200px-RedeTV%21_logo_%282019%29.svg.png"},
-  {name:"TV Cultura",cat:"TV Aberta",slug:"pt-tvcultura",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/c/c6/Logotipo_da_TV_Cultura.svg/200px-Logotipo_da_TV_Cultura.svg.png"},
+  {name:"Globo",cat:"TV Aberta",slug:"globosp",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/1/1f/Rede_Globo_logo_%282024%29.svg/200px-Rede_Globo_logo_%282024%29.svg.png"},
+  {name:"SBT",cat:"TV Aberta",slug:"sbt",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/f/f4/SBT_logo_%282024%29.svg/200px-SBT_logo_%282024%29.svg.png"},
+  {name:"Record TV",cat:"TV Aberta",slug:"recordsp",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/RecordTV_logo_%282016%29.svg/200px-RecordTV_logo_%282016%29.svg.png"},
+  {name:"Band",cat:"TV Aberta",slug:"bandsp",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Band_logo_%282023%29.svg/200px-Band_logo_%282023%29.svg.png"},
+  {name:"RedeTV!",cat:"TV Aberta",slug:"redetv",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/RedeTV%21_logo_%282019%29.svg/200px-RedeTV%21_logo_%282019%29.svg.png"},
+  {name:"TV Cultura",cat:"TV Aberta",slug:"tvcultura",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/c/c6/Logotipo_da_TV_Cultura.svg/200px-Logotipo_da_TV_Cultura.svg.png"},
   // Esportes
-  {name:"SporTV",cat:"Esportes",slug:"pt-sportv1",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/SporTV_2017.svg/200px-SporTV_2017.svg.png"},
-  {name:"SporTV 2",cat:"Esportes",slug:"pt-sportv2",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/SporTV_2017.svg/200px-SporTV_2017.svg.png"},
-  {name:"SporTV 3",cat:"Esportes",slug:"pt-sportv3",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/SporTV_2017.svg/200px-SporTV_2017.svg.png"},
+  {name:"SporTV",cat:"Esportes",slug:"sportv",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/SporTV_2017.svg/200px-SporTV_2017.svg.png"},
+  {name:"SporTV 2",cat:"Esportes",slug:"sportv2",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/SporTV_2017.svg/200px-SporTV_2017.svg.png"},
+  {name:"SporTV 3",cat:"Esportes",slug:"sportv3",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/SporTV_2017.svg/200px-SporTV_2017.svg.png"},
   {name:"ESPN",cat:"Esportes",slug:"espn",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/ESPN_wordmark.svg/200px-ESPN_wordmark.svg.png"},
   {name:"ESPN 2",cat:"Esportes",slug:"espn2",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/ESPN_wordmark.svg/200px-ESPN_wordmark.svg.png"},
   {name:"ESPN 4",cat:"Esportes",slug:"espn4",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/ESPN_wordmark.svg/200px-ESPN_wordmark.svg.png"},
   {name:"Premiere",cat:"Esportes",slug:"premiere",img:"https://upload.wikimedia.org/wikipedia/pt/thumb/e/e1/Premiere_FC_logo.svg/200px-Premiere_FC_logo.svg.png"},
-  {name:"Premiere 2",cat:"Esportes",slug:"premiere2",img:"https://upload.wikimedia.org/wikipedia/pt/thumb/e/e1/Premiere_FC_logo.svg/200px-Premiere_FC_logo.svg.png"},
-  {name:"Premiere 3",cat:"Esportes",slug:"premiere3",img:"https://upload.wikimedia.org/wikipedia/pt/thumb/e/e1/Premiere_FC_logo.svg/200px-Premiere_FC_logo.svg.png"},
-  {name:"TNT Sports",cat:"Esportes",slug:"tnt-sports",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/5/54/TNT_Sports_2024.svg/200px-TNT_Sports_2024.svg.png"},
+  {name:"Premiere 2",cat:"Esportes",slug:"premiere-2",img:"https://upload.wikimedia.org/wikipedia/pt/thumb/e/e1/Premiere_FC_logo.svg/200px-Premiere_FC_logo.svg.png"},
+  {name:"Premiere 3",cat:"Esportes",slug:"premiere-3",img:"https://upload.wikimedia.org/wikipedia/pt/thumb/e/e1/Premiere_FC_logo.svg/200px-Premiere_FC_logo.svg.png"},
+  {name:"Combate",cat:"Esportes",slug:"combate",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/5/54/TNT_Sports_2024.svg/200px-TNT_Sports_2024.svg.png"},
   {name:"CazéTV",cat:"Esportes",slug:"cazetv",img:"https://yt3.googleusercontent.com/cGEmBaCqCaCIKUYaJSO2h3USv7iVpVKKL5GWQO5MaZL8r4u-aDzx7gLkDMqIHCN6cPJKIDdN_0=s200"},
-  {name:"Band Sports",cat:"Esportes",slug:"pt-bandsports",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Band_logo_%282023%29.svg/200px-Band_logo_%282023%29.svg.png"},
+  {name:"Band Sports",cat:"Esportes",slug:"bandsports",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Band_logo_%282023%29.svg/200px-Band_logo_%282023%29.svg.png"},
   {name:"UFC Fight Pass",cat:"Esportes",slug:"ufcfightpass",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/9/92/UFC_Logo.svg/200px-UFC_Logo.svg.png"},
   // Filmes / Entretenimento
-  {name:"Telecine",cat:"Filmes",slug:"pt-telecine",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Logo_Telecine_2020.svg/200px-Logo_Telecine_2020.svg.png"},
+  {name:"Telecine Premium",cat:"Filmes",slug:"telecinepremium",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Logo_Telecine_2020.svg/200px-Logo_Telecine_2020.svg.png"},
   {name:"HBO",cat:"Filmes",slug:"hbo",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/HBO_logo.svg/200px-HBO_logo.svg.png"},
   {name:"TNT",cat:"Filmes",slug:"tnt",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/TNT_Logo_2016.svg/200px-TNT_Logo_2016.svg.png"},
-  {name:"Megapix",cat:"Filmes",slug:"pt-megapix",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Megapix_2020.svg/200px-Megapix_2020.svg.png"},
+  {name:"Megapix",cat:"Filmes",slug:"megapix",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Megapix_2020.svg/200px-Megapix_2020.svg.png"},
   // Variedades
-  {name:"Multishow",cat:"Variedades",slug:"pt-multishow",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Multishow_2021.svg/200px-Multishow_2021.svg.png"},
-  {name:"GloboNews",cat:"Notícias",slug:"pt-globonews",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/2/2d/GloboNews_logo_2024.svg/200px-GloboNews_logo_2024.svg.png"},
-  {name:"CNN Brasil",cat:"Notícias",slug:"pt-cnnbrasil",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/CNN_Brasil_2024.svg/200px-CNN_Brasil_2024.svg.png"},
-  {name:"BandNews",cat:"Notícias",slug:"pt-bandnews",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/3/32/Band_News_TV.png/200px-Band_News_TV.png"},
-  {name:"Discovery",cat:"Variedades",slug:"discovery-channel",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Discovery_Channel_-_Logo_2019.svg/200px-Discovery_Channel_-_Logo_2019.svg.png"},
-  {name:"Cartoon Network",cat:"Infantil",slug:"cartoon-network",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Cartoon_Network_2010_logo.svg/200px-Cartoon_Network_2010_logo.svg.png"},
-  {name:"Disney Channel",cat:"Infantil",slug:"disney-channel",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/Disney_Channel_Logo_2014.svg/200px-Disney_Channel_Logo_2014.svg.png"},
-  {name:"Nickelodeon",cat:"Infantil",slug:"nickelodeon",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/Nickelodeon_2023_logo_%28outline%29.svg/200px-Nickelodeon_2023_logo_%28outline%29.svg.png"},
+  {name:"Multishow",cat:"Variedades",slug:"multishow",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Multishow_2021.svg/200px-Multishow_2021.svg.png"},
+  {name:"GloboNews",cat:"Notícias",slug:"globonews",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/2/2d/GloboNews_logo_2024.svg/200px-GloboNews_logo_2024.svg.png"},
+  {name:"CNN Brasil",cat:"Notícias",slug:"cnnbrasil",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/CNN_Brasil_2024.svg/200px-CNN_Brasil_2024.svg.png"},
+  {name:"BandNews",cat:"Notícias",slug:"bandnews",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/3/32/Band_News_TV.png/200px-Band_News_TV.png"},
+  {name:"Discovery",cat:"Variedades",slug:"discoverychannel",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Discovery_Channel_-_Logo_2019.svg/200px-Discovery_Channel_-_Logo_2019.svg.png"},
+  {name:"Cartoon Network",cat:"Infantil",slug:"cartoonnetwork",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Cartoon_Network_2010_logo.svg/200px-Cartoon_Network_2010_logo.svg.png"},
+  {name:"Disney+",cat:"Infantil",slug:"disneyplus1",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/Disney_Channel_Logo_2014.svg/200px-Disney_Channel_Logo_2014.svg.png"},
+  {name:"Discovery Kids",cat:"Infantil",slug:"discoverykids",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/Nickelodeon_2023_logo_%28outline%29.svg/200px-Nickelodeon_2023_logo_%28outline%29.svg.png"},
   {name:"History",cat:"Variedades",slug:"history",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/History_Logo_2024.svg/200px-History_Logo_2024.svg.png"},
   {name:"A&E",cat:"Variedades",slug:"ae",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/A%26E_Network_logo_2024.svg/200px-A%26E_Network_logo_2024.svg.png"},
-  {name:"National Geographic",cat:"Variedades",slug:"national-geographic",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/Natgeo.svg/200px-Natgeo.svg.png"}
+  {name:"GNT",cat:"Variedades",slug:"gnt",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/Natgeo.svg/200px-Natgeo.svg.png"}
 ];
 
 const TV_BASES=[
-  {n:"Servidor 1",u:"https://embedcanais.online/canal/"},
-  {n:"Servidor 2",u:"https://1.embedcanaisdetv.com/canal/"},
-  {n:"Servidor 3",u:"https://embedcanais.top/canal/"},
-  {n:"Servidor 4",u:"https://embeddecanais.com/canal/"},
-  {n:"Servidor 5",u:"https://embedcanaisonline.com/canal/"}
+  {n:"Servidor 1",u:"https://v2.rdembed.sbs/"},
+  {n:"Servidor 2",u:"https://v1.rdembed.sbs/"},
+  {n:"Servidor 3",u:"https://reidosembeds.lat/embed/"}
 ];
-
-let _tvCurrentSlug='';
-let _tvCurrentIdx=0;
-let _tvAutoFallback=null;
 
 function openTV(ch){
   const pw=document.getElementById("pw");
@@ -486,126 +480,47 @@ function openTV(ch){
   document.getElementById("ov").classList.add("open");
   document.body.style.overflow="hidden";
 
-  _tvCurrentSlug=ch.slug;
-  _tvCurrentIdx=0;
-  if(_tvAutoFallback){clearTimeout(_tvAutoFallback);_tvAutoFallback=null;}
-
   let srvBtns='';
   TV_BASES.forEach((s,i)=>{
     srvBtns+=`<button class="srv-btn${i===0?' active':''}" onclick="window._tvSwitchSrv(${i},'${ch.slug}')">${s.n}</button>`;
   });
 
+  const embedUrl=TV_BASES[0].u+ch.slug;
   pw.innerHTML=`
     <div class="embed-wrap">
       <div class="embed-topbar">
         <div class="embed-brand">CineVault</div>
         <div class="srv-row">${srvBtns}</div>
       </div>
-      <div id="tvStatus" style="position:absolute;bottom:12px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.75);color:#aaa;font-size:.72rem;padding:4px 12px;border-radius:6px;z-index:11;pointer-events:none;transition:opacity .3s;opacity:1">Conectando ao ${TV_BASES[0].n}...</div>
-      <iframe id="cvFrame" src="${TV_BASES[0].u+ch.slug}" frameborder="0" allowfullscreen allow="autoplay;encrypted-media" style="width:100%;height:100%;position:absolute;top:0;left:0" referrerpolicy="no-referrer"></iframe>
+      <iframe id="cvFrame" src="${embedUrl}" frameborder="0" allowfullscreen allow="autoplay;encrypted-media" style="width:100%;height:100%;position:absolute;top:0;left:0" referrerpolicy="no-referrer"></iframe>
     </div>`;
 
-  _tvStartFallbackChain(ch.slug,0);
-}
-
-function _tvStartFallbackChain(slug,startIdx){
-  if(_tvAutoFallback){clearTimeout(_tvAutoFallback);_tvAutoFallback=null;}
-  _tvCurrentIdx=startIdx;
+  // Auto-fallback entre servidores
+  let tvTrying=true;
+  const tryNext=(idx)=>{
+    if(!tvTrying||idx>=TV_BASES.length)return;
+    const ifr=document.getElementById("cvFrame");
+    if(!ifr)return;
+    ifr.src=TV_BASES[idx].u+ch.slug;
+    document.querySelectorAll('.srv-btn').forEach((b,i)=>b.classList.toggle('active',i===idx));
+    const check=setTimeout(()=>tryNext(idx+1),8000);
+    ifr.onload=()=>{tvTrying=false;clearTimeout(check);};
+  };
   const ifr=document.getElementById("cvFrame");
-  const status=document.getElementById("tvStatus");
-  if(!ifr)return;
-
-  let settled=false;
-
-  // Se o iframe carrega conteúdo real, consideramos sucesso
-  ifr.onload=()=>{
-    settled=true;
-    if(_tvAutoFallback){clearTimeout(_tvAutoFallback);_tvAutoFallback=null;}
-    if(status)status.style.opacity='0';
-  };
-
-  // onerror é chamado quando ERR_CONNECTION_REFUSED, DNS fail, etc.
-  ifr.onerror=()=>{
-    if(settled)return;
-    _tvTryNextServer(slug);
-  };
-
-  // Timeout — se em 6s não carregou, tenta próximo servidor
-  _tvAutoFallback=setTimeout(()=>{
-    if(settled)return;
-    _tvTryNextServer(slug);
-  },6000);
-}
-
-function _tvTryNextServer(slug){
-  if(_tvAutoFallback){clearTimeout(_tvAutoFallback);_tvAutoFallback=null;}
-  const nextIdx=_tvCurrentIdx+1;
-  if(nextIdx>=TV_BASES.length){
-    // Todos os servidores falharam — mostrar mensagem
-    const status=document.getElementById("tvStatus");
-    if(status){
-      status.textContent="Nenhum servidor disponível no momento. Tente novamente mais tarde.";
-      status.style.opacity='1';
-      status.style.color='#f87171';
-    }
-    return;
+  if(ifr){
+    const check0=setTimeout(()=>tryNext(1),8000);
+    ifr.onload=()=>{tvTrying=false;clearTimeout(check0);};
   }
-  _tvCurrentIdx=nextIdx;
-  const ifr=document.getElementById("cvFrame");
-  const status=document.getElementById("tvStatus");
-  if(!ifr)return;
-
-  if(status){
-    status.textContent=`Tentando ${TV_BASES[nextIdx].n}...`;
-    status.style.opacity='1';
-    status.style.color='#aaa';
-  }
-  ifr.src=TV_BASES[nextIdx].u+slug;
-  document.querySelectorAll('.srv-btn').forEach((b,i)=>b.classList.toggle('active',i===nextIdx));
-
-  let settled=false;
-  ifr.onload=()=>{
-    settled=true;
-    if(_tvAutoFallback){clearTimeout(_tvAutoFallback);_tvAutoFallback=null;}
-    if(status)status.style.opacity='0';
-  };
-  ifr.onerror=()=>{
-    if(settled)return;
-    _tvTryNextServer(slug);
-  };
-  _tvAutoFallback=setTimeout(()=>{
-    if(settled)return;
-    _tvTryNextServer(slug);
-  },6000);
 }
 
 window._tvSwitchSrv=function(idx,slug){
-  if(_tvAutoFallback){clearTimeout(_tvAutoFallback);_tvAutoFallback=null;}
   const ifr=document.getElementById("cvFrame");
-  const status=document.getElementById("tvStatus");
   if(!ifr||!TV_BASES[idx])return;
   ifr.src=TV_BASES[idx].u+slug;
-  _tvCurrentIdx=idx;
   document.querySelectorAll('.srv-btn').forEach((b,i)=>b.classList.toggle('active',i===idx));
-  if(status){
-    status.textContent=`Conectando ao ${TV_BASES[idx].n}...`;
-    status.style.opacity='1';
-    status.style.color='#aaa';
-  }
-  // Não inicia auto-fallback no clique manual — o usuário escolheu
-  let settled=false;
-  ifr.onload=()=>{
-    settled=true;
-    if(status)status.style.opacity='0';
-  };
-  // Timeout apenas para esconder status
-  setTimeout(()=>{
-    if(!settled&&status){
-      status.textContent="Servidor pode estar indisponível. Tente outro.";
-      status.style.color='#fbbf24';
-    }
-  },10000);
 };
+
+/* Esportes usa openTV() direto — canais esportivos via multicanais.im */
 
 function renderTV(){
   const ct=document.getElementById("content");

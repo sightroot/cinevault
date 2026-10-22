@@ -461,8 +461,8 @@ const TV_CHANNELS=[
 
 const TV_BASES=[
   {n:"Servidor 1",u:"https://v2.rdembed.sbs/"},
-  {n:"Servidor 2",u:"https://v1.rdembed.sbs/"},
-  {n:"Servidor 3",u:"https://reidosembeds.lat/embed/"}
+  {n:"Servidor 2",u:"https://w2.rdembed.sbs/"},
+  {n:"Servidor 3",u:"https://w1.rdembed.sbs/"}
 ];
 
 function openTV(ch){
@@ -492,7 +492,7 @@ function openTV(ch){
         <div class="embed-brand">CineVault</div>
         <div class="srv-row">${srvBtns}</div>
       </div>
-      <iframe id="cvFrame" src="${embedUrl}" frameborder="0" allowfullscreen allow="autoplay;encrypted-media" sandbox="allow-scripts allow-same-origin allow-presentation allow-forms" style="width:100%;height:100%;position:absolute;top:0;left:0" referrerpolicy="no-referrer"></iframe>
+      <iframe id="cvFrame" src="${embedUrl}" frameborder="0" allowfullscreen allow="autoplay;encrypted-media" style="width:100%;height:100%;position:absolute;top:0;left:0" referrerpolicy="no-referrer"></iframe>
       <div id="clickShield" style="position:absolute;top:0;left:0;width:100%;height:100%;z-index:10;cursor:pointer" onclick="this.style.display='none'"></div>
     </div>`;
 

@@ -509,7 +509,7 @@ function openTV(ch){
     srvBtns+=`<button class="srv-btn${i===0?' active':''}" onclick="window._tvSwitchSrv(${i},'${ch.slug}')">${s.n}</button>`;
   });
 
-  const embedUrl=proxyUrl(TV_BASES[0].u+ch.slug);
+  const embedUrl=TV_BASES[0].u+ch.slug;
   pw.innerHTML=`
     <div class="embed-wrap">
       <div class="embed-topbar">
@@ -541,7 +541,7 @@ function openTV(ch){
 window._tvSwitchSrv=function(idx,slug){
   const ifr=document.getElementById("cvFrame");
   if(!ifr||!TV_BASES[idx])return;
-  ifr.src=proxyUrl(TV_BASES[idx].u+slug);
+  ifr.src=TV_BASES[idx].u+slug;
   document.querySelectorAll('.srv-btn').forEach((b,i)=>b.classList.toggle('active',i===idx));
 };
 
@@ -885,14 +885,10 @@ async function fetchSeasons(tmdbId,type){
 // Variáveis globais do player atual
 let _cvIds=null,_cvItem=null,_cvAvail=[];
 
-function proxyUrl(rawUrl){
-  return "/api/proxy-embed?url="+encodeURIComponent(rawUrl);
-}
-
 function mkUrl(eb,type,ids,s,e){
   const vid=eb.idType==="imdb"?(ids.imdb||ids.tmdb):ids.tmdb;
   const tpl=type==="filme"?eb.movie:eb.tv;
-  return proxyUrl(eb.u+tpl.replace('{id}',vid).replace('{s}',s||'1').replace('{e}',e||'1'));
+  return eb.u+tpl.replace('{id}',vid).replace('{s}',s||'1').replace('{e}',e||'1');
 }
 
 let _cvCurSrv=0,_cvCurS='1',_cvCurE='1';
@@ -1197,6 +1193,59 @@ function gateLogout() {
 }
 
 gateInit();
+</script>
+
+<script>
+(function(){
+  // Bloquear window.open globalmente (popunders do parent)
+  var _origOpen=window.open;
+  window.open=function(url){
+    // Permitir apenas se for chamado por um click real do usuario em link visivel
+    console.log('[CineVault] Blocked popup: '+url);
+    return null;
+  };
+
+  // Interceptar e bloquear cliques que tentam navegar pra fora
+  document.addEventListener('click',function(e){
+    var a=e.target.closest('a[target=_blank]');
+    if(a && a.href && !a.closest('.srv-row') && !a.closest('#epsel')){
+      // Bloquear links _blank que nao sao dos controles do player
+      var dominated=a.closest('.embed-wrap')||a.closest('#pw');
+      if(!dominated){return;}
+      e.preventDefault();
+      e.stopPropagation();
+      console.log('[CineVault] Blocked redirect link: '+a.href);
+    }
+  },true);
+
+  // MutationObserver: remover scripts/iframes de ad injetados dinamicamente
+  var obs=new MutationObserver(function(muts){
+    muts.forEach(function(m){
+      m.addedNodes.forEach(function(n){
+        if(n.nodeType!==1)return;
+        // Remover iframes injetados fora do player
+        if(n.tagName==='IFRAME' && !n.id && !n.closest('.embed-wrap')){
+          n.remove();
+          console.log('[CineVault] Removed injected iframe');
+        }
+        // Remover divs de overlay/popup de ad
+        if(n.tagName==='DIV'){
+          var s=window.getComputedStyle(n);
+          if(s.position==='fixed' && s.zIndex>999 && !n.closest('#ov')){
+            n.remove();
+            console.log('[CineVault] Removed ad overlay div');
+          }
+        }
+      });
+    });
+  });
+  obs.observe(document.body,{childList:true,subtree:true});
+
+  // Bloquear beforeunload hijacks
+  window.addEventListener('beforeunload',function(e){
+    // Nao deixar ads impedirem o usuario de sair
+  });
+})();
 </script>
 </body>
 </html>

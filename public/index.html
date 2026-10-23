@@ -509,15 +509,15 @@ function openTV(ch){
     srvBtns+=`<button class="srv-btn${i===0?' active':''}" onclick="window._tvSwitchSrv(${i},'${ch.slug}')">${s.n}</button>`;
   });
 
-  const embedUrl=TV_BASES[0].u+ch.slug;
+  const embedUrl=proxyUrl(TV_BASES[0].u+ch.slug);
   pw.innerHTML=`
     <div class="embed-wrap">
       <div class="embed-topbar">
         <div class="embed-brand">CineVault</div>
         <div class="srv-row">${srvBtns}</div>
       </div>
-      <iframe id="cvFrame" src="${embedUrl}" frameborder="0" allowfullscreen allow="autoplay;encrypted-media" style="width:100%;height:100%;position:absolute;top:0;left:0" referrerpolicy="no-referrer"></iframe>
-      <div id="clickShield" style="position:absolute;top:0;left:0;width:100%;height:100%;z-index:10;cursor:pointer" onclick="this.style.display='none'"></div>
+      <iframe id="cvFrame" src="${embedUrl}" frameborder="0" allowfullscreen sandbox="allow-scripts allow-same-origin allow-forms allow-presentation" allow="autoplay;encrypted-media" style="width:100%;height:100%;position:absolute;top:0;left:0" referrerpolicy="no-referrer"></iframe>
+      <div id="clickShield" style="position:absolute;top:0;left:0;width:100%;height:100%;z-index:10;cursor:pointer" data-clicks="0" onclick="var c=parseInt(this.dataset.clicks||0)+1;this.dataset.clicks=c;if(c>=2)this.style.display='none';"></div>
     </div>`;
 
   // Auto-fallback entre servidores
@@ -541,7 +541,7 @@ function openTV(ch){
 window._tvSwitchSrv=function(idx,slug){
   const ifr=document.getElementById("cvFrame");
   if(!ifr||!TV_BASES[idx])return;
-  ifr.src=TV_BASES[idx].u+slug;
+  ifr.src=proxyUrl(TV_BASES[idx].u+slug);
   document.querySelectorAll('.srv-btn').forEach((b,i)=>b.classList.toggle('active',i===idx));
 };
 
@@ -885,10 +885,14 @@ async function fetchSeasons(tmdbId,type){
 // Variáveis globais do player atual
 let _cvIds=null,_cvItem=null,_cvAvail=[];
 
+function proxyUrl(rawUrl){
+  return "/api/proxy-embed?url="+encodeURIComponent(rawUrl);
+}
+
 function mkUrl(eb,type,ids,s,e){
   const vid=eb.idType==="imdb"?(ids.imdb||ids.tmdb):ids.tmdb;
   const tpl=type==="filme"?eb.movie:eb.tv;
-  return eb.u+tpl.replace('{id}',vid).replace('{s}',s||'1').replace('{e}',e||'1');
+  return proxyUrl(eb.u+tpl.replace('{id}',vid).replace('{s}',s||'1').replace('{e}',e||'1'));
 }
 
 let _cvCurSrv=0,_cvCurS='1',_cvCurE='1';
@@ -913,7 +917,7 @@ function loadPlayer(s,e,startIdx){
         <div class="srv-row">${serverBtns}</div>
       </div>
       <div class="embed-status" id="embedStatus" style="position:absolute;bottom:8px;left:50%;transform:translateX(-50%);z-index:15;font-size:.65rem;color:var(--dim);background:rgba(0,0,0,.7);padding:3px 10px;border-radius:8px;display:none"></div>
-      <iframe id="cvFrame" src="${embedUrl}" allow="autoplay; encrypted-media; fullscreen; picture-in-picture" allowfullscreen referrerpolicy="no-referrer" style="position:absolute;top:0;left:0;width:100%;height:100%;border:none;z-index:1"></iframe>
+      <iframe id="cvFrame" src="${embedUrl}" allow="autoplay; encrypted-media; fullscreen; picture-in-picture" allowfullscreen sandbox="allow-scripts allow-same-origin allow-forms allow-presentation" referrerpolicy="no-referrer" style="position:absolute;top:0;left:0;width:100%;height:100%;border:none;z-index:1"></iframe>
       <div id="clickShield" style="position:absolute;top:0;left:0;width:100%;height:100%;z-index:10;cursor:pointer" onclick="this.style.display='none'"></div>
     </div>`;
 

@@ -1200,39 +1200,6 @@ function gateLogout() {
 gateInit();
 </script>
 
-<script>
-(function(){
-  // Anti-ad leve: bloqueia popups e overlays sem quebrar iframes de player
 
-  document.addEventListener('click',function(e){
-    var a=e.target.closest('a[target=_blank]');
-    if(!a || !a.href) return;
-    if(a.closest('.srv-row') || a.closest('#epsel') || a.closest('.embed-topbar')) return;
-    if(a.closest('.embed-wrap') || a.closest('#pw')){
-      e.preventDefault();
-      e.stopPropagation();
-      console.log('[CineVault] Blocked ad link: '+a.href);
-    }
-  },true);
-
-  var obs=new MutationObserver(function(muts){
-    muts.forEach(function(m){
-      m.addedNodes.forEach(function(n){
-        if(n.nodeType!==1)return;
-        if(n.tagName==='DIV' && !n.closest('.embed-wrap') && !n.closest('#ov') && !n.closest('#pw')){
-          try{
-            var s=window.getComputedStyle(n);
-            if(s.position==='fixed' && parseInt(s.zIndex)>9999){
-              n.remove();
-              console.log('[CineVault] Removed ad overlay');
-            }
-          }catch(e){}
-        }
-      });
-    });
-  });
-  obs.observe(document.body,{childList:true,subtree:true});
-})();
-</script>
 </body>
 </html>

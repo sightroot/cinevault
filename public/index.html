@@ -509,70 +509,43 @@ function openTV(ch){
 
   let srvBtns='';
   TV_BASES.forEach((s,i)=>{
-    if(_isMobile){
-      const url=s.u+ch.slug;
-      srvBtns+=`<button class="srv-btn${i===0?' active':''}" onclick="window.open('${url}','_blank')">${s.n} ↗</button>`;
-    } else {
-      srvBtns+=`<button class="srv-btn${i===0?' active':''}" onclick="window._tvSwitchSrv(${i},'${ch.slug}')">${s.n}</button>`;
-    }
+    srvBtns+=`<button class="srv-btn${i===0?' active':''}" onclick="window._tvSwitchSrv(${i},'${ch.slug}')">${s.n}</button>`;
   });
 
   const embedUrl=TV_BASES[0].u+ch.slug;
-  if(_isMobile){
-    pw.innerHTML=`
-      <div class="embed-wrap">
-        <div class="embed-topbar">
-          <div class="embed-brand">CineVault</div>
-          <div class="srv-row">${srvBtns}</div>
-        </div>
-        <div style="position:absolute;top:0;left:0;width:100%;height:100%;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px;padding:20px;text-align:center">
-          <div style="font-size:2rem">📺</div>
-          <div style="color:var(--txt);font-size:.9rem;font-weight:600">${ch.name}</div>
-          <div style="color:var(--dim);font-size:.75rem">No mobile, toque num servidor acima para abrir o player em tela cheia</div>
-        </div>
-      </div>`;
-  } else {
-    pw.innerHTML=`
-      <div class="embed-wrap">
-        <div class="embed-topbar">
-          <div class="embed-brand">CineVault</div>
-          <div class="srv-row">${srvBtns}</div>
-        </div>
-        <iframe id="cvFrame" src="${embedUrl}" frameborder="0" allowfullscreen allow="autoplay; encrypted-media; fullscreen; picture-in-picture; storage-access" style="width:100%;height:100%;position:absolute;top:0;left:0"></iframe>
+  pw.innerHTML=`
+    <div class="embed-wrap">
+      <div class="embed-topbar">
+        <div class="embed-brand">CineVault</div>
+        <div class="srv-row">${srvBtns}</div>
+      </div>
+      <iframe id="cvFrame" src="${embedUrl}" frameborder="0" allowfullscreen allow="autoplay; encrypted-media; fullscreen; picture-in-picture; storage-access" style="width:100%;height:100%;position:absolute;top:0;left:0"></iframe>
 
-      </div>`;
-  }
+    </div>`;
 
-  // Auto-fallback entre servidores (só desktop, mobile abre direto)
-  if(!_isMobile){
-    let tvTrying=true;
-    const tryNext=(idx)=>{
-      if(!tvTrying||idx>=TV_BASES.length)return;
-      const ifr=document.getElementById("cvFrame");
-      if(!ifr)return;
-      ifr.src=TV_BASES[idx].u+ch.slug;
-      document.querySelectorAll('.srv-btn').forEach((b,i)=>b.classList.toggle('active',i===idx));
-      const check=setTimeout(()=>tryNext(idx+1),8000);
-      ifr.onload=()=>{tvTrying=false;clearTimeout(check);};
-    };
+  // Auto-fallback entre servidores
+  let tvTrying=true;
+  const tryNext=(idx)=>{
+    if(!tvTrying||idx>=TV_BASES.length)return;
     const ifr=document.getElementById("cvFrame");
-    if(ifr){
-      const check0=setTimeout(()=>tryNext(1),8000);
-      ifr.onload=()=>{tvTrying=false;clearTimeout(check0);};
-    }
-  } else {
-    // Mobile: abre o primeiro servidor direto
-    window.open(embedUrl,'_blank');
+    if(!ifr)return;
+    ifr.src=TV_BASES[idx].u+ch.slug;
+    document.querySelectorAll('.srv-btn').forEach((b,i)=>b.classList.toggle('active',i===idx));
+    const check=setTimeout(()=>tryNext(idx+1),8000);
+    ifr.onload=()=>{tvTrying=false;clearTimeout(check);};
+  };
+  const ifr=document.getElementById("cvFrame");
+  if(ifr){
+    const check0=setTimeout(()=>tryNext(1),8000);
+    ifr.onload=()=>{tvTrying=false;clearTimeout(check0);};
   }
 }
 
 window._tvSwitchSrv=function(idx,slug){
-  if(_isMobile){
-    window.open(TV_BASES[idx].u+slug,'_blank');
-    return;
-  }
   const ifr=document.getElementById("cvFrame");
   if(!ifr||!TV_BASES[idx])return;
+  var sh=document.getElementById("clickShield");
+  if(sh){sh.style.pointerEvents="auto";}
   ifr.src=TV_BASES[idx].u+slug;
   document.querySelectorAll('.srv-btn').forEach((b,i)=>b.classList.toggle('active',i===idx));
 };
@@ -917,8 +890,6 @@ async function fetchSeasons(tmdbId,type){
 // Variáveis globais do player atual
 let _cvIds=null,_cvItem=null,_cvAvail=[];
 
-const _isMobile=/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-
 function mkUrl(eb,type,ids,s,e){
   const vid=eb.idType==="imdb"?(ids.imdb||ids.tmdb):ids.tmdb;
   const tpl=type==="filme"?eb.movie:eb.tv;
@@ -937,12 +908,7 @@ function loadPlayer(s,e,startIdx){
 
   let serverBtns='';
   _cvAvail.forEach((eb,i)=>{
-    if(_isMobile && eb.n!=='CineSrc'){
-      const url=mkUrl(eb,_cvItem.type,_cvIds,s,e);
-      serverBtns+=`<button class="srv-btn${i===idx?' active':''}" onclick="window.open('${url}','_blank')">${eb.n} ↗</button>`;
-    } else {
-      serverBtns+=`<button class="srv-btn${i===idx?' active':''}" onclick="window._cvSwitchSrv(${i},'${s}','${e}')">${eb.n}</button>`;
-    }
+    serverBtns+=`<button class="srv-btn${i===idx?' active':''}" onclick="window._cvSwitchSrv(${i},'${s}','${e}')">${eb.n}</button>`;
   });
 
   pw.innerHTML=`
@@ -1016,11 +982,6 @@ function _cvSwitchSrvDirect(idx,s,e,isAuto){
 
 window._cvSwitchSrv=function(idx,s,e){
   _cvAutoTrying=false; // manual switch cancels auto-fallback
-  if(_isMobile && _cvAvail[idx] && _cvAvail[idx].n!=='CineSrc'){
-    const url=mkUrl(_cvAvail[idx],_cvItem.type,_cvIds,s||_cvCurS,e||_cvCurE);
-    window.open(url,'_blank');
-    return;
-  }
   _cvSwitchSrvDirect(idx,s||_cvCurS,e||_cvCurE,false);
 };
 

@@ -370,6 +370,43 @@ function showUpgradeModal(){
   }
 }
 
+function showDnsModal(){
+  let m=document.getElementById('dnsModal');
+  if(m){m.style.display='flex';return;}
+  m=document.createElement('div');m.id='dnsModal';
+  m.style.cssText='position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.9);display:flex;align-items:center;justify-content:center;padding:16px;overflow-y:auto';
+  m.innerHTML=`
+    <div style="background:var(--bg2);border:1px solid var(--accent);border-radius:20px;padding:32px 24px;max-width:440px;width:100%;text-align:center">
+      <div style="font-size:2rem;margin-bottom:8px">⚠️</div>
+      <h2 style="font-family:var(--font-display);font-size:1.2rem;margin-bottom:6px">Player não carregou?</h2>
+      <p style="color:var(--dim);font-size:.8rem;margin-bottom:16px">Alguns provedores de internet bloqueiam os servidores de streaming. Configure o DNS da Cloudflare para resolver:</p>
+
+      <div style="background:var(--bg);border-radius:14px;padding:16px;text-align:left;margin-bottom:12px">
+        <div style="font-size:.75rem;font-weight:700;color:var(--accent);margin-bottom:8px">📱 Android</div>
+        <div style="font-size:.78rem;color:var(--txt);line-height:1.6">
+          1. <b>Configurações</b> → <b>Rede e Internet</b><br>
+          2. <b>DNS Privado</b><br>
+          3. Selecione <b>"Nome do host do provedor de DNS privado"</b><br>
+          4. Digite: <span style="color:var(--accent);font-family:monospace;font-size:.75rem;user-select:all">1dot1dot1dot1.cloudflare-dns.com</span>
+        </div>
+      </div>
+
+      <div style="background:var(--bg);border-radius:14px;padding:16px;text-align:left;margin-bottom:16px">
+        <div style="font-size:.75rem;font-weight:700;color:var(--accent);margin-bottom:8px">🍎 iPhone</div>
+        <div style="font-size:.78rem;color:var(--txt);line-height:1.6">
+          1. Baixe o app <b>1.1.1.1 (WARP)</b> na App Store<br>
+          2. Abra e toque em <b>Ativar</b><br>
+          <span style="color:var(--dim);font-size:.72rem">Ou: Ajustes → Wi-Fi → (i) → DNS → Manual → adicione <span style="font-family:monospace">1.1.1.1</span> e <span style="font-family:monospace">1.0.0.1</span></span>
+        </div>
+      </div>
+
+      <p style="color:var(--dim);font-size:.7rem;margin-bottom:16px">Após configurar, volte e recarregue a página.</p>
+      <button onclick="this.closest('#dnsModal').style.display='none'" style="background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;font-weight:700;padding:12px 28px;border-radius:100px;border:none;font-size:.85rem;cursor:pointer">Entendi</button>
+    </div>`;
+  document.body.appendChild(m);
+  m.addEventListener('click',e=>{if(e.target===m)m.style.display='none';});
+}
+
 // TMDB dynamic catalog for series/anime/dorama
 const IMG_BASE="https://image.tmdb.org/t/p/w185";
 const tmdbPageCache={};
@@ -518,6 +555,7 @@ function openTV(ch){
       <div class="embed-topbar">
         <div class="embed-brand">CineVault</div>
         <div class="srv-row">${srvBtns}</div>
+        <button onclick="showDnsModal()" style="background:none;border:1px solid var(--dim);color:var(--dim);font-size:.6rem;padding:3px 8px;border-radius:8px;cursor:pointer;white-space:nowrap">Não carrega?</button>
       </div>
       <iframe id="cvFrame" src="${embedUrl}" frameborder="0" allowfullscreen allow="autoplay; encrypted-media; fullscreen; picture-in-picture; storage-access" style="width:100%;height:100%;position:absolute;top:0;left:0"></iframe>
 
@@ -916,6 +954,7 @@ function loadPlayer(s,e,startIdx){
       <div class="embed-topbar">
         <div class="embed-brand">CineVault</div>
         <div class="srv-row">${serverBtns}</div>
+        <button onclick="showDnsModal()" style="background:none;border:1px solid var(--dim);color:var(--dim);font-size:.6rem;padding:3px 8px;border-radius:8px;cursor:pointer;white-space:nowrap">Não carrega?</button>
       </div>
       <div class="embed-status" id="embedStatus" style="position:absolute;bottom:8px;left:50%;transform:translateX(-50%);z-index:15;font-size:.65rem;color:var(--dim);background:rgba(0,0,0,.7);padding:3px 10px;border-radius:8px;display:none"></div>
       <iframe id="cvFrame" src="${embedUrl}" allow="autoplay; encrypted-media; fullscreen; picture-in-picture; storage-access" allowfullscreen style="position:absolute;top:0;left:0;width:100%;height:100%;border:none;z-index:1"></iframe>
@@ -967,7 +1006,7 @@ function _cvSwitchSrvDirect(idx,s,e,isAuto){
         _cvSwitchSrvDirect(nextIdx,s,e,true);
       } else {
         const st=document.getElementById("embedStatus");
-        if(st){st.textContent="Nenhum servidor respondeu. Tente outro título ou volte depois.";st.style.display="block";}
+        if(st){st.innerHTML='Nenhum servidor respondeu. <a href="#" onclick="event.preventDefault();showDnsModal()" style="color:var(--accent);text-decoration:underline">Não carrega? Veja como resolver</a>';st.style.display="block";}
         _cvAutoTrying=false;
       }
     },6000);

@@ -513,7 +513,6 @@ function openTV(ch){
   });
 
   const embedUrl=TV_BASES[0].u+ch.slug;
-  const isMobile=/Mobi|Android|iPhone|iPad/i.test(navigator.userAgent);
   pw.innerHTML=`
     <div class="embed-wrap">
       <div class="embed-topbar">
@@ -521,51 +520,34 @@ function openTV(ch){
         <div class="srv-row">${srvBtns}</div>
       </div>
       <iframe id="cvFrame" src="${embedUrl}" frameborder="0" allowfullscreen allow="autoplay; encrypted-media; fullscreen; picture-in-picture; storage-access" style="width:100%;height:100%;position:absolute;top:0;left:0"></iframe>
-      <div id="tvMobileFallback" style="display:none;position:absolute;inset:0;z-index:5;background:rgba(0,0,0,.85);display:none;flex-direction:column;align-items:center;justify-content:center;gap:12px;text-align:center;padding:20px">
-        <div style="font-size:.85rem;color:#aaa">Player não carregou? Toque para abrir direto:</div>
-        <a id="tvDirectLink" href="${embedUrl}" target="_blank" rel="noopener" style="display:inline-block;padding:12px 28px;background:var(--accent-g);color:#fff;font-weight:700;border-radius:24px;text-decoration:none;font-size:.9rem">Abrir Player ▶</a>
-      </div>
+
     </div>`;
 
   // Auto-fallback entre servidores
   let tvTrying=true;
   const tryNext=(idx)=>{
-    if(!tvTrying||idx>=TV_BASES.length){
-      // Se tentou todos e nenhum carregou no mobile, mostra fallback
-      if(isMobile){const fb=document.getElementById("tvMobileFallback");if(fb)fb.style.display="flex";}
-      return;
-    }
+    if(!tvTrying||idx>=TV_BASES.length)return;
     const ifr=document.getElementById("cvFrame");
     if(!ifr)return;
     ifr.src=TV_BASES[idx].u+ch.slug;
-    const dl=document.getElementById("tvDirectLink");
-    if(dl)dl.href=TV_BASES[idx].u+ch.slug;
     document.querySelectorAll('.srv-btn').forEach((b,i)=>b.classList.toggle('active',i===idx));
-    const check=setTimeout(()=>tryNext(idx+1),6000);
+    const check=setTimeout(()=>tryNext(idx+1),8000);
     ifr.onload=()=>{tvTrying=false;clearTimeout(check);};
   };
   const ifr=document.getElementById("cvFrame");
   if(ifr){
-    const check0=setTimeout(()=>{
-      if(isMobile){const fb=document.getElementById("tvMobileFallback");if(fb)fb.style.display="flex";}
-      tryNext(1);
-    },6000);
-    ifr.onload=()=>{tvTrying=false;clearTimeout(check0);
-      const fb=document.getElementById("tvMobileFallback");if(fb)fb.style.display="none";
-    };
+    const check0=setTimeout(()=>tryNext(1),8000);
+    ifr.onload=()=>{tvTrying=false;clearTimeout(check0);};
   }
 }
 
 window._tvSwitchSrv=function(idx,slug){
   const ifr=document.getElementById("cvFrame");
   if(!ifr||!TV_BASES[idx])return;
+  var sh=document.getElementById("clickShield");
+  if(sh){sh.style.pointerEvents="auto";}
   ifr.src=TV_BASES[idx].u+slug;
-  const dl=document.getElementById("tvDirectLink");
-  if(dl)dl.href=TV_BASES[idx].u+slug;
   document.querySelectorAll('.srv-btn').forEach((b,i)=>b.classList.toggle('active',i===idx));
-  // Reset fallback — dar tempo pro novo servidor carregar
-  const fb=document.getElementById("tvMobileFallback");
-  if(fb)fb.style.display="none";
 };
 
 /* Esportes usa openTV() direto — canais esportivos via multicanais.im */

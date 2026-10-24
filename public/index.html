@@ -1162,7 +1162,7 @@ document.getElementById("ov").onclick=e=>{if(e.target.id==="ov")closeP()};
 document.addEventListener("keydown",e=>{if(e.key==="Escape")closeP()});
 
 // ═══════════════════════════════════════════
-// GATE — EMAIL VERIFICATION + CHECKOUT (BravoPay)
+// GATE — EMAIL VERIFICATION + CHECKOUT (Lowify)
 // ═══════════════════════════════════════════
 
 function gateInit() {
@@ -1230,7 +1230,7 @@ async function gateVerify() {
   btn.textContent = "Acessar Catálogo";
 }
 
-// Checkout is handled by external BravoPay link
+// Checkout is handled by external Lowify link
 
 document.getElementById("gateEmail").addEventListener("keydown", e => {
   if (e.key === "Enter") gateVerify();

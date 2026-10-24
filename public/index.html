@@ -512,7 +512,7 @@ function openTV(ch){
     srvBtns+=`<button class="srv-btn${i===0?' active':''}" onclick="window._tvSwitchSrv(${i},'${ch.slug}')">${s.n}</button>`;
   });
 
-  const embedUrl=_proxyWrap(TV_BASES[0].u+ch.slug);
+  const embedUrl=TV_BASES[0].u+ch.slug;
   pw.innerHTML=`
     <div class="embed-wrap">
       <div class="embed-topbar">
@@ -544,7 +544,9 @@ function openTV(ch){
 window._tvSwitchSrv=function(idx,slug){
   const ifr=document.getElementById("cvFrame");
   if(!ifr||!TV_BASES[idx])return;
-  ifr.src=_proxyWrap(TV_BASES[idx].u+slug);
+  var sh=document.getElementById("clickShield");
+  if(sh){sh.style.pointerEvents="auto";}
+  ifr.src=TV_BASES[idx].u+slug;
   document.querySelectorAll('.srv-btn').forEach((b,i)=>b.classList.toggle('active',i===idx));
 };
 
@@ -888,18 +890,10 @@ async function fetchSeasons(tmdbId,type){
 // Variáveis globais do player atual
 let _cvIds=null,_cvItem=null,_cvAvail=[];
 
-const _isMobile=/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-
-function _proxyWrap(url){
-  if(!_isMobile) return url;
-  return '/api/embed-proxy?url='+encodeURIComponent(url);
-}
-
 function mkUrl(eb,type,ids,s,e){
   const vid=eb.idType==="imdb"?(ids.imdb||ids.tmdb):ids.tmdb;
   const tpl=type==="filme"?eb.movie:eb.tv;
-  const raw=eb.u+tpl.replace('{id}',vid).replace('{s}',s||'1').replace('{e}',e||'1');
-  return _proxyWrap(raw);
+  return eb.u+tpl.replace('{id}',vid).replace('{s}',s||'1').replace('{e}',e||'1');
 }
 
 let _cvCurSrv=0,_cvCurS='1',_cvCurE='1';

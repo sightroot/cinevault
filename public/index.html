@@ -517,7 +517,7 @@ function openTV(ch){
         <div class="srv-row">${srvBtns}</div>
       </div>
       <iframe id="cvFrame" src="${embedUrl}" frameborder="0" allowfullscreen allow="autoplay;encrypted-media" style="width:100%;height:100%;position:absolute;top:0;left:0" referrerpolicy="no-referrer"></iframe>
-      <div id="clickShield" style="position:absolute;top:0;left:0;width:100%;height:100%;z-index:10;cursor:pointer;background:transparent" onclick="var self=this;self.style.pointerEvents='none';setTimeout(function(){self.style.pointerEvents='auto';},150);"></div>
+
     </div>`;
 
   // Auto-fallback entre servidores
@@ -916,7 +916,7 @@ function loadPlayer(s,e,startIdx){
       </div>
       <div class="embed-status" id="embedStatus" style="position:absolute;bottom:8px;left:50%;transform:translateX(-50%);z-index:15;font-size:.65rem;color:var(--dim);background:rgba(0,0,0,.7);padding:3px 10px;border-radius:8px;display:none"></div>
       <iframe id="cvFrame" src="${embedUrl}" allow="autoplay; encrypted-media; fullscreen; picture-in-picture" allowfullscreen referrerpolicy="no-referrer" style="position:absolute;top:0;left:0;width:100%;height:100%;border:none;z-index:1"></iframe>
-      <div id="clickShield" style="position:absolute;top:0;left:0;width:100%;height:100%;z-index:10;cursor:pointer;background:transparent" onclick="var self=this;self.style.pointerEvents='none';setTimeout(function(){self.style.pointerEvents='auto';},150);"></div>
+
     </div>`;
 
   // Auto-fallback: se o iframe não carrega em 8s, tenta o próximo
@@ -949,9 +949,7 @@ function _cvSwitchSrvDirect(idx,s,e,isAuto){
   if(!ifr)return;
   const eb=_cvAvail[idx];
   if(!eb)return;
-  // Resetar clickShield a cada troca
-  var sh=document.getElementById("clickShield");
-  if(sh){sh.style.pointerEvents="auto";}
+
   ifr.src=mkUrl(eb,_cvItem.type,_cvIds,s,e);
   document.querySelectorAll('.srv-btn').forEach((b,i)=>b.classList.toggle('active',i===idx));
 

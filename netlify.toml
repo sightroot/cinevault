@@ -10,6 +10,14 @@
   for = "/*"
   [headers.values]
     Permissions-Policy = "storage-access=*, fullscreen=*"
+    Cache-Control = "no-cache, no-store, must-revalidate"
+    Pragma = "no-cache"
+    X-Content-Type-Options = "nosniff"
+
+[[headers]]
+  for = "/index.html"
+  [headers.values]
+    Cache-Control = "no-store, max-age=0"
 
 [[redirects]]
   from = "/api/*"

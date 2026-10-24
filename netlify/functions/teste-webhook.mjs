@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+const html = `<!DOCTYPE html>
 <html><head><meta charset="UTF-8"><title>Teste Webhook Lowify</title>
 <style>body{background:#111;color:#fff;font-family:system-ui;display:flex;justify-content:center;align-items:center;min-height:100vh;margin:0}
 .box{background:#1a1a2e;padding:32px;border-radius:12px;max-width:500px;width:90%;text-align:center}
@@ -50,4 +50,15 @@ async function enviar(){
   }
 }
 </script>
-</body></html>
+</body></html>`;
+
+export default async (req) => {
+  return new Response(html, {
+    status: 200,
+    headers: { "Content-Type": "text/html; charset=utf-8" }
+  });
+};
+
+export const config = {
+  path: "/teste-webhook"
+};

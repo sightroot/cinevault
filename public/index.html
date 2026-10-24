@@ -1202,52 +1202,36 @@ gateInit();
 
 <script>
 (function(){
-  // Bloquear window.open globalmente (popunders do parent)
-  var _noop=function(url){console.log('[CineVault] Blocked popup: '+(url||''));return null;};
-  window.open=_noop;
-  // Re-blindar a cada 2s (embeds restauram window.open após load)
-  setInterval(function(){window.open=_noop;},2000);
+  // Anti-ad leve: bloqueia popups e overlays sem quebrar iframes de player
 
-  // Interceptar e bloquear cliques que tentam navegar pra fora
   document.addEventListener('click',function(e){
     var a=e.target.closest('a[target=_blank]');
-    if(a && a.href && !a.closest('.srv-row') && !a.closest('#epsel')){
-      // Bloquear links _blank que nao sao dos controles do player
-      var dominated=a.closest('.embed-wrap')||a.closest('#pw');
-      if(!dominated){return;}
+    if(!a || !a.href) return;
+    if(a.closest('.srv-row') || a.closest('#epsel') || a.closest('.embed-topbar')) return;
+    if(a.closest('.embed-wrap') || a.closest('#pw')){
       e.preventDefault();
       e.stopPropagation();
-      console.log('[CineVault] Blocked redirect link: '+a.href);
+      console.log('[CineVault] Blocked ad link: '+a.href);
     }
   },true);
 
-  // MutationObserver: remover scripts/iframes de ad injetados dinamicamente
   var obs=new MutationObserver(function(muts){
     muts.forEach(function(m){
       m.addedNodes.forEach(function(n){
         if(n.nodeType!==1)return;
-        // Remover iframes injetados fora do player
-        if(n.tagName==='IFRAME' && !n.id && !n.closest('.embed-wrap')){
-          n.remove();
-          console.log('[CineVault] Removed injected iframe');
-        }
-        // Remover divs de overlay/popup de ad
-        if(n.tagName==='DIV'){
-          var s=window.getComputedStyle(n);
-          if(s.position==='fixed' && s.zIndex>999 && !n.closest('#ov')){
-            n.remove();
-            console.log('[CineVault] Removed ad overlay div');
-          }
+        if(n.tagName==='DIV' && !n.closest('.embed-wrap') && !n.closest('#ov') && !n.closest('#pw')){
+          try{
+            var s=window.getComputedStyle(n);
+            if(s.position==='fixed' && parseInt(s.zIndex)>9999){
+              n.remove();
+              console.log('[CineVault] Removed ad overlay');
+            }
+          }catch(e){}
         }
       });
     });
   });
   obs.observe(document.body,{childList:true,subtree:true});
-
-  // Bloquear beforeunload hijacks
-  window.addEventListener('beforeunload',function(e){
-    // Nao deixar ads impedirem o usuario de sair
-  });
 })();
 </script>
 </body>

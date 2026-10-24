@@ -1245,16 +1245,9 @@ gateInit();
 <script>
 (function(){
   // Block popups from embeds (ads opening new tabs)
-  var _allowedHosts=[location.hostname,'cinesrc.st','fembed.lol','embed.warezcdn.net','multiembed.mov','player.autoembed.cc','vidsrc.pro','rdembed.sbs','pagseguropix.org'];
-  function _isAllowed(url){
-    if(!url)return false;
-    if(url.indexOf('blob:')===0)return true;
-    for(var i=0;i<_allowedHosts.length;i++){if(url.indexOf(_allowedHosts[i])>-1)return true;}
-    return false;
-  }
   var _origOpen=window.open;
   window.open=function(url){
-    if(_isAllowed(url)) return _origOpen.apply(window,arguments);
+    if(url && (url.indexOf(location.hostname)>-1 || url.indexOf('blob:')===0)) return _origOpen.apply(window,arguments);
     console.log('[CineVault] Blocked popup: '+(url||''));
     return null;
   };
@@ -1262,7 +1255,7 @@ gateInit();
     if(window.open.toString().indexOf('Blocked')===-1){
       var _o=window.open;
       window.open=function(url){
-        if(_isAllowed(url)) return _o.apply(window,arguments);
+        if(url && (url.indexOf(location.hostname)>-1 || url.indexOf('blob:')===0)) return _o.apply(window,arguments);
         console.log('[CineVault] Blocked popup: '+(url||''));
         return null;
       };

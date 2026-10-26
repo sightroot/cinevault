@@ -7,6 +7,17 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>CineVault</title>
+<!-- TikTok Pixel Code Start -->
+<script>
+!function (w, d, t) {
+  w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie","holdConsent","revokeConsent","grantConsent"],ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);ttq.instance=function(t){for(
+var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);return e},ttq.load=function(e,n){var r="https://analytics.tiktok.com/i18n/pixel/events.js",o=n&&n.partner;ttq._i=ttq._i||{},ttq._i[e]=[],ttq._i[e]._u=r,ttq._t=ttq._t||{},ttq._t[e]=+new Date,ttq._o=ttq._o||{},ttq._o[e]=n||{};n=document.createElement("script")
+;n.type="text/javascript",n.async=!0,n.src=r+"?sdkid="+e+"&lib="+t;e=document.getElementsByTagName("script")[0];e.parentNode.insertBefore(n,e)};
+  ttq.load('DBFCRQ3C77UASCMGKM0G');
+  ttq.page();
+}(window, document, 'ttq');
+</script>
+<!-- TikTok Pixel Code End -->
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap">
 <style>
 
@@ -257,7 +268,7 @@ a{color:inherit;text-decoration:none}
         <div style="display:flex;align-items:center;gap:10px;color:var(--dim);font-size:.78rem"><span style="color:var(--green);font-size:1.1rem">✓</span> Acesso vitalício — pague uma vez só</div>
         <div style="display:flex;align-items:center;gap:10px;color:var(--dim);font-size:.78rem"><span style="color:var(--green);font-size:1.1rem">✓</span> Player HD integrado com 7 servidores</div>
       </div>
-      <a href="https://pagseguropix.org/c/cinevault-premium" target="_blank" style="text-decoration:none;display:block;margin-top:20px">
+      <a href="https://pagseguropix.org/c/cinevault-premium" target="_blank" onclick="if(typeof ttq!=='undefined')ttq.track('InitiateCheckout',{value:19.90,currency:'BRL',content_type:'product',content_id:'basico'})" style="text-decoration:none;display:block;margin-top:20px">
         <button class="gate-btn gate-btn-green" type="button" style="width:100%">Comprar agora — R$ 19,90</button>
       </a>
       <p style="font-size:.68rem;color:var(--dim2);margin-top:12px">Após o pagamento, use o e-mail da compra na aba "Já comprei".</p>
@@ -362,7 +373,7 @@ function showUpgradeModal(){
         <div style="font-size:2.4rem;margin-bottom:12px">🔒</div>
         <h2 style="font-family:var(--font-display);font-size:1.4rem;margin-bottom:8px">TV ao Vivo é exclusiva do<br><span style=color:var(--accent)>Plano Completo</span></h2>
         <p style="color:var(--dim);font-size:.85rem;margin-bottom:24px">Assine o plano completo e tenha acesso a 30+ canais ao vivo incluindo Globo, SBT, ESPN, SporTV, HBO e muito mais!</p>
-        <a href="https://pagseguropix.org/c/cinevault-premium-copy" target="_blank" style="display:inline-block;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;font-weight:700;padding:14px 32px;border-radius:100px;text-decoration:none;font-size:.95rem;margin-bottom:12px">Assinar Completo — R$29,99</a>
+        <a href="https://pagseguropix.org/c/cinevault-premium-copy" target="_blank" onclick="if(typeof ttq!=='undefined')ttq.track('InitiateCheckout',{value:29.99,currency:'BRL',content_type:'product',content_id:'completo'})" style="display:inline-block;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;font-weight:700;padding:14px 32px;border-radius:100px;text-decoration:none;font-size:.95rem;margin-bottom:12px">Assinar Completo — R$29,99</a>
         <br><button onclick="this.closest('#upgradeModal').remove()" style="background:none;border:none;color:var(--dim);font-size:.8rem;cursor:pointer;margin-top:8px">Fechar</button>
       </div>`;
     document.body.appendChild(m);
@@ -1080,6 +1091,9 @@ async function openP(item){
   document.getElementById("pd").textContent=item.b||("Aproveite "+item.t+" em qualidade HD no CineVault.");
   document.getElementById("ov").classList.add("open");
   document.body.style.overflow="hidden";
+
+  // TikTok Pixel — ViewContent
+  if(typeof ttq!=='undefined') ttq.track('ViewContent',{content_name:item.t,content_type:'product',content_id:String(item.id||'')});
 
   // Loading state
   pw.innerHTML=`
